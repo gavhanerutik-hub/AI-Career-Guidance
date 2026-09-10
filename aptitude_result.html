@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Test Result</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="form-container">
+
+    <h1>🎯 Your Result</h1>
+
+    <h2>
+        Score: {{ score }} / {{ total }}
+    </h2>
+
+    {% if score >= 8 %}
+
+        <p>
+            Excellent! Your aptitude performance is very strong. 🌟
+        </p>
+
+    {% elif score >= 5 %}
+
+        <p>
+            Good performance! There is room for improvement. 👍
+        </p>
+
+    {% else %}
+
+        <p>
+            Keep practicing and improve your logical skills. 💪
+        </p>
+
+    {% endif %}
+
+    <a href="/dashboard">
+        <button>Back to Dashboard</button>
+    </a>
+
+</div>
+
+</body>
+
+</html>

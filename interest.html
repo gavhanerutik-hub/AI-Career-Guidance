@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Interest Test</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="form-container">
+
+    <h1>❤️ Interest Test</h1>
+
+    <p>Select the option that best describes you.</p>
+
+    <form method="POST">
+
+        {% for question in questions %}
+
+        <div class="question">
+
+            <h3>
+                {{ loop.index }}. {{ question.question }}
+            </h3>
+
+            {% for option in question.options %}
+
+            <label>
+                <input
+                    type="radio"
+                    name="question_{{ question.id }}"
+                    value="{{ option }}"
+                    required
+                >
+
+                {{ option }}
+            </label>
+
+            <br>
+
+            {% endfor %}
+
+        </div>
+
+        <hr>
+
+        {% endfor %}
+
+        <button type="submit">
+            Submit Interest Test
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

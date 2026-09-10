@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Interest Result</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="form-container">
+
+    <h1>❤️ Your Interest Profile</h1>
+
+    <h2>{{ result }}</h2>
+
+    <p>
+        Based on your answers, this field may be
+        suitable for you.
+    </p>
+
+    <a href="/dashboard">
+
+        <button>
+            Back to Dashboard
+        </button>
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

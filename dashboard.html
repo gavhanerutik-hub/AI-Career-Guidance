@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+    <h2>🎓 Career Dashboard</h2>
+
+    <a href="/logout">
+        Logout
+    </a>
+
+</nav>
+
+
+<div class="dashboard">
+
+    <h1>
+        Welcome, {{ student.name }} 👋
+    </h1>
+
+    <p>
+        Your personalized career journey starts here.
+    </p>
+
+
+    <div class="dashboard-cards">
+
+        <div class="card">
+
+            🧠
+
+            <h3>Aptitude Test</h3>
+
+            <p>
+                Test your logical and numerical abilities.
+            </p>
+
+            <a href="/aptitude">
+             <button>
+             Start Test
+             </button>
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            ❤️
+
+            <h3>Interest Test</h3>
+
+            <p>
+                Discover your career interests.
+            </p>
+
+           <a href="/interest">
+            <button>
+             Start Interest Test
+             </button>
+          </a>
+        </div>
+
+
+        <div class="card">
+
+            🤖
+
+            <h3>AI Recommendation</h3>
+
+            <p>
+                Get your personalized career recommendations.
+            </p>
+
+            <a href="/recommendation">
+
+             <button>
+                Get Recommendation
+             </button>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
