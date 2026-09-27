@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Holland Interest Assessment{% endblock %}
+
+{% block content %}
+<div class="assessment-container">
+    <div class="assessment-intro">
+        <span class="badge">Vocational Personality</span>
+        <h1>❤️ Holland RIASEC Career Interest Assessment</h1>
+        <p>Choose the option in each of the 12 scenarios that best reflects your genuine passion, working style, and curiosity.</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('interest') }}">
+        {% for question in questions %}
+            <div class="question-block">
+                <div class="question-header">
+                    <span class="question-title">Scenario {{ loop.index }} of {{ questions|length }}</span>
+                    <span class="category-tag">Career Interest</span>
+                </div>
+
+                <p style="font-size: 1.05rem; font-weight: 600; color: var(--dark); margin-bottom: 1.25rem;">
+                    {{ question.question }}
+                </p>
+
+                <div class="options-group">
+                    {% for option in question.options %}
+                        <label class="option-label">
+                            <input
+                                type="radio"
+                                name="question_{{ question.id }}"
+                                value="{{ option.code }}"
+                                required
+                            >
+                            <span>{{ option.text }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary" style="padding: 0.9rem 2.5rem; font-size: 1.1rem;">
+                Submit Assessment & Generate Career Matches 🚀
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}{{ career.title }}{% endblock %}
+
+{% block content %}
+<div class="recommendations-wrapper" style="max-width: 960px;">
+    <div style="margin-bottom: 1.5rem;">
+        <a href="{{ url_for('recommendation') }}" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+            ← Back to All Recommendations
+        </a>
+    </div>
+
+    <div class="career-card" style="border: 1px solid var(--gray-200);">
+        <span class="category-tag" style="margin-bottom: 0.75rem; display: inline-block;">{{ career.category }}</span>
+        <h1 style="font-size: 2.2rem; color: var(--dark); margin-bottom: 0.75rem;">{{ career.title }}</h1>
+        <p style="font-size: 1.1rem; color: var(--gray-700); line-height: 1.6; margin-bottom: 2rem;">
+            {{ career.description }}
+        </p>
+
+        <!-- Insights -->
+        <div class="career-insights-grid">
+            <div class="insight-item">
+                <h4>Average Salary</h4>
+                <p>{{ career.avg_salary_inr }}</p>
+            </div>
+            <div class="insight-item">
+                <h4>Industry Growth</h4>
+                <p style="color: var(--primary);">{{ career.market_demand }}</p>
+            </div>
+            <div class="insight-item">
+                <h4>Your Skill Match</h4>
+                <p style="color: var(--success);">{{ skill_gap.match_percentage }}% Acquired</p>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="skills-container">
+            <h3 style="font-size: 1.2rem; color: var(--dark); margin-bottom: 1rem;">Required Capabilities</h3>
+
+            <div style="margin-bottom: 1rem;">
+                <h4 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 0.5rem;">Technical / Hard Skills:</h4>
+                <div class="chip-list">
+                    {% for req in career.required_skills %}
+                        {% if req in skill_gap.matched_skills %}
+                            <span class="chip chip-matched">✅ {{ req }}</span>
+                        {% else %}
+                            <span class="chip chip-missing">🎯 {{ req }}</span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div>
+                <h4 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 0.5rem;">Essential Soft Skills:</h4>
+                <div class="chip-list">
+                    {% for soft in career.soft_skills %}
+                        <span class="chip chip-soft">{{ soft }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="roadmap-section">
+            <h3 style="font-size: 1.2rem; color: var(--dark); margin-bottom: 1rem;">Full Learning Pathway</h3>
+            <div class="roadmap-timeline">
+                {% for step in career.roadmap %}
+                    <div class="timeline-step">
+                        <div class="step-number">{{ loop.index }}</div>
+                        <div class="step-content">
+                            <div class="step-phase">{{ step.phase }}</div>
+                            <div class="step-topics">{{ step.topics }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Resources -->
+        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-200);">
+            <h3 style="font-size: 1.2rem; color: var(--dark); margin-bottom: 1rem;">Recommended Resources</h3>
+            <div class="resources-list">
+                {% for res in career.resources %}
+                    <a href="{{ res.url }}" target="_blank" rel="noopener noreferrer" class="resource-link">
+                        <span>🔗 {{ res.name }}</span>
+                        <span style="font-size: 0.75rem; color: var(--gray-400);">({{ res.type }})</span>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div style="margin-top: 2.5rem; display: flex; gap: 1rem;">
+            <a href="{{ url_for('profile') }}" class="btn btn-secondary">
+                Update My Skills ✏️
+            </a>
+            <a href="{{ url_for('recommendation') }}" class="btn btn-primary">
+                View Other Career Matches
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

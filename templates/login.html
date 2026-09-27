@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Student Login{% endblock %}
+
+{% block content %}
+<div class="form-wrapper">
+    <div class="form-header">
+        <h2>🔐 Student Login</h2>
+        <p>Access your career roadmap and assessments.</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('login') }}">
+        <div class="form-group">
+            <label for="email">Registered Email</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required autofocus>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Log In</button>
+    </form>
+
+    <div class="form-footer">
+        Don't have an account yet? <a href="{{ url_for('register') }}">Create an account</a>
+    </div>
+</div>
+{% endblock %}

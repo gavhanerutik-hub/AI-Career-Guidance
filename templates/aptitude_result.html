@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Aptitude Results{% endblock %}
+
+{% block content %}
+<div class="result-card">
+    <span class="badge">Assessment Complete</span>
+    <h1 style="font-size: 2rem; color: var(--dark); margin-top: 0.5rem;">🎯 Your Aptitude Results</h1>
+    <p style="color: var(--gray-600);">Here is how you performed across the cognitive domains.</p>
+
+    <div class="score-circle">
+        <span class="score-number">{{ score }}</span>
+        <span class="score-total">out of {{ total }}</span>
+    </div>
+
+    {% if score >= 8 %}
+        <div class="alert alert-success" style="display: block; text-align: center; margin-bottom: 2rem;">
+            <strong>🌟 Outstanding Performance!</strong> You demonstrate strong logical deduction and quantitative aptitude, making you well-suited for advanced STEM, engineering, or high-strategy careers.
+        </div>
+    {% elif score >= 5 %}
+        <div class="alert alert-info" style="display: block; text-align: center; margin-bottom: 2rem;">
+            <strong>👍 Solid Aptitude!</strong> You have a good cognitive foundation across core domains. Continued practice on technical logic and numerical speed will unlock even greater career potential.
+        </div>
+    {% else %}
+        <div class="alert alert-warning" style="display: block; text-align: center; margin-bottom: 2rem;">
+            <strong>💪 Good Effort!</strong> Focus on targeted problem-solving drills in math and logical series. Our AI will align career paths that emphasize your creative, interpersonal, and practical strengths!
+        </div>
+    {% endif %}
+
+    <div class="breakdown-bars">
+        <h3 style="font-size: 1.1rem; color: var(--dark); margin-bottom: 1.25rem;">Domain Breakdown</h3>
+
+        <div class="bar-item">
+            <div class="bar-header">
+                <span>🔢 Numerical Ability</span>
+                <span>{{ numerical }}/10</span>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill" style="width: {{ numerical * 10 }}%;"></div>
+            </div>
+        </div>
+
+        <div class="bar-item">
+            <div class="bar-header">
+                <span>🧠 Logical Reasoning</span>
+                <span>{{ logical }}/10</span>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill" style="width: {{ logical * 10 }}%;"></div>
+            </div>
+        </div>
+
+        <div class="bar-item">
+            <div class="bar-header">
+                <span>📖 Verbal Ability</span>
+                <span>{{ verbal }}/10</span>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill" style="width: {{ verbal * 10 }}%;"></div>
+            </div>
+        </div>
+
+        <div class="bar-item">
+            <div class="bar-header">
+                <span>⚙️ Technical Thinking</span>
+                <span>{{ technical }}/10</span>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill" style="width: {{ technical * 10 }}%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+        <a href="{{ url_for('interest') }}" class="btn btn-primary" style="padding: 0.85rem 1.85rem;">
+            Proceed to Interest Assessment →
+        </a>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Student Registration{% endblock %}
+
+{% block content %}
+<div class="form-wrapper">
+    <div class="form-header">
+        <h2>👤 Create Student Account</h2>
+        <p>Start your AI-guided career exploration today.</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('register') }}">
+        <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Rahul Sharma" required autofocus>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password *</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Create a strong password" required minlength="4">
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" class="form-control" placeholder="e.g. 18" min="10" max="65">
+        </div>
+
+        <div class="form-group">
+            <label for="class_name">Current Education / Stream</label>
+            <select id="class_name" name="class_name" class="form-control">
+                <option value="10th Standard">10th Standard</option>
+                <option value="12th Science">12th Science (PCM / PCB)</option>
+                <option value="12th Commerce">12th Commerce</option>
+                <option value="12th Arts">12th Arts / Humanities</option>
+                <option value="B.Tech / B.E. (Engineering)">B.Tech / B.E. (Engineering)</option>
+                <option value="B.Sc / BCA (Computer/Science)">B.Sc / BCA (Computer/Science)</option>
+                <option value="B.Com / BBA (Business/Finance)">B.Com / BBA (Business/Finance)</option>
+                <option value="BA / Humanities / Design">BA / Humanities / Design</option>
+                <option value="Postgraduate / Master's">Postgraduate / Master's</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="skills">Current Skills (comma-separated, optional)</label>
+            <input type="text" id="skills" name="skills" class="form-control" placeholder="e.g. Python, SQL, Excel, Figma, Writing">
+            <small style="color: var(--gray-400); font-size: 0.8rem;">Used to calculate your personal Skill Gap analysis.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+    </form>
+
+    <div class="form-footer">
+        Already have an account? <a href="{{ url_for('login') }}">Log in here</a>
+    </div>
+</div>
+{% endblock %}

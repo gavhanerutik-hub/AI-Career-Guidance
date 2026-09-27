@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}Career Guidance Report - {{ student.name }}{% endblock %}
+
+{% block content %}
+<div class="report-paper">
+    <div class="no-print" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--gray-200); padding-bottom: 1rem;">
+        <a href="{{ url_for('dashboard') }}" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+            ← Return to Dashboard
+        </a>
+        <button onclick="window.print()" class="btn btn-primary btn-sm">
+            🖨️ Print / Save as PDF
+        </button>
+    </div>
+
+    <!-- Official Report Header -->
+    <div style="border-bottom: 2px solid var(--dark); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <span style="font-size: 0.85rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">Official Career Assessment Report</span>
+            <h1 style="font-size: 2.2rem; color: var(--dark); margin-top: 0.25rem;">AI Career Guidance Platform</h1>
+            <p style="color: var(--gray-600); font-size: 0.95rem;">Empowering Future Leaders with Data-Driven Vocational Analytics</p>
+        </div>
+        <div style="text-align: right;">
+            <p style="font-size: 0.9rem; color: var(--gray-600);">Date: <strong>{{ result.created_at.strftime('%B %d, %Y') }}</strong></p>
+            <p style="font-size: 0.9rem; color: var(--gray-600);">Candidate ID: <strong>STU-{{ '%04d' % student.id }}</strong></p>
+        </div>
+    </div>
+
+    <!-- Student Profile Summary -->
+    <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 2rem;">
+        <h3 style="font-size: 1.1rem; color: var(--dark); margin-bottom: 1rem;">1. Candidate Profile</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+            <div>
+                <span style="font-size: 0.8rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700;">Student Name</span>
+                <p style="font-weight: 700; color: var(--dark);">{{ student.name }}</p>
+            </div>
+            <div>
+                <span style="font-size: 0.8rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700;">Education Stream</span>
+                <p style="font-weight: 700; color: var(--dark);">{{ student.class_name or 'Undergraduate' }}</p>
+            </div>
+            <div>
+                <span style="font-size: 0.8rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700;">Email Address</span>
+                <p style="font-weight: 700; color: var(--dark);">{{ student.email }}</p>
+            </div>
+            <div>
+                <span style="font-size: 0.8rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700;">Assessed Skills</span>
+                <p style="font-weight: 700; color: var(--dark);">{{ student.skills or 'General Academic' }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assessment Performance Matrix -->
+    <div style="margin-bottom: 2.5rem;">
+        <h3 style="font-size: 1.1rem; color: var(--dark); margin-bottom: 1rem;">2. Assessment Performance Matrix</h3>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+            <div style="border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1.25rem;">
+                <h4 style="font-size: 0.95rem; color: var(--primary); margin-bottom: 0.75rem;">Cognitive Aptitude (Overall: {{ result.aptitude_score }}/10)</h4>
+                <div style="font-size: 0.9rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Numerical Ability:</span>
+                        <strong>{{ result.numerical_score }}/10</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Logical Reasoning:</span>
+                        <strong>{{ result.logical_score }}/10</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Verbal Ability:</span>
+                        <strong>{{ result.verbal_score }}/10</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Technical Thinking:</span>
+                        <strong>{{ result.technical_score }}/10</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div style="border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1.25rem;">
+                <h4 style="font-size: 0.95rem; color: var(--primary); margin-bottom: 0.75rem;">Holland RIASEC Interest Profile</h4>
+                <div style="font-size: 0.9rem; display: flex; flex-direction: column; gap: 0.4rem;">
+                    {% for code, val in riasec.items() %}
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>{{ code }} ({{ riasec_names.get(code, '').split('(')[0] }}):</span>
+                            <strong>{{ val }}/10</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Primary Career Recommendation -->
+    {% if primary %}
+    <div style="border: 2px solid var(--primary); border-radius: var(--radius-md); padding: 1.75rem; margin-bottom: 2.5rem; background: var(--gray-50);">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.8rem; font-weight: 800; color: var(--primary); text-transform: uppercase;">Top Recommended Career</span>
+            <span style="font-size: 1.15rem; font-weight: 800; color: #065f46; background: var(--success-light); padding: 0.2rem 0.7rem; border-radius: var(--radius-full);">
+                {{ primary.confidence }}% AI Match
+            </span>
+        </div>
+        <h2 style="font-size: 1.6rem; color: var(--dark); margin-bottom: 0.25rem;">{{ primary.title }}</h2>
+        <span style="color: var(--primary); font-size: 0.9rem; font-weight: 600;">{{ primary.category }}</span>
+
+        <p style="font-size: 0.95rem; color: var(--gray-700); margin: 0.75rem 0 1.25rem;">
+            {{ primary.description }}
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 0.85rem; background: var(--white); border-radius: var(--radius-sm); border: 1px solid var(--gray-200); margin-bottom: 1.25rem;">
+            <div>
+                <span style="font-size: 0.75rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700;">Avg. Compensation</span>
+                <p style="font-weight: 700; color: var(--dark); font-size: 0.95rem;">{{ primary.avg_salary_inr }}</p>
+            </div>
+            <div>
+                <span style="font-size: 0.75rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700;">Market Growth</span>
+                <p style="font-weight: 700; color: var(--primary); font-size: 0.95rem;">{{ primary.market_demand }}</p>
+            </div>
+            <div>
+                <span style="font-size: 0.75rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700;">Skill Alignment</span>
+                <p style="font-weight: 700; color: var(--success); font-size: 0.95rem;">{{ primary.skill_gap.match_percentage }}% Matched</p>
+            </div>
+        </div>
+
+        <h4 style="font-size: 0.95rem; color: var(--dark); margin-bottom: 0.5rem;">4-Phase Strategic Roadmap:</h4>
+        <div style="font-size: 0.9rem;">
+            {% for step in primary.roadmap %}
+                <div style="margin-bottom: 0.5rem;">
+                    <strong>{{ step.phase }}:</strong> <span style="color: var(--gray-700);">{{ step.topics }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Alternative Recommended Paths -->
+    {% if recommendations|length > 1 %}
+    <div style="margin-bottom: 2rem;">
+        <h3 style="font-size: 1.1rem; color: var(--dark); margin-bottom: 1rem;">3. Alternative Career Pathways</h3>
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+            <thead>
+                <tr style="background: var(--gray-100); border-bottom: 2px solid var(--gray-200);">
+                    <th style="padding: 0.75rem;">Rank</th>
+                    <th style="padding: 0.75rem;">Career Path</th>
+                    <th style="padding: 0.75rem;">Domain</th>
+                    <th style="padding: 0.75rem;">AI Match</th>
+                    <th style="padding: 0.75rem;">Estimated Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in recommendations[1:] %}
+                <tr style="border-bottom: 1px solid var(--gray-200);">
+                    <td style="padding: 0.75rem;">#{{ loop.index + 1 }}</td>
+                    <td style="padding: 0.75rem; font-weight: 600;">{{ c.title }}</td>
+                    <td style="padding: 0.75rem; color: var(--gray-600);">{{ c.category }}</td>
+                    <td style="padding: 0.75rem; font-weight: 700; color: var(--primary);">{{ c.confidence }}%</td>
+                    <td style="padding: 0.75rem; color: var(--gray-700);">{{ c.avg_salary_inr }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    <!-- Report Sign-off -->
+    <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-200); display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--gray-400);">
+        <span>Generated by AI Career Guidance Engine • Scikit-Learn Cosine Analytics</span>
+        <span>Candidate Signature: _________________________</span>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Interest Profile Results{% endblock %}
+
+{% block content %}
+<div class="result-card" style="max-width: 760px;">
+    <span class="badge">Profile Generated</span>
+    <h1 style="font-size: 2rem; color: var(--dark); margin-top: 0.5rem;">❤️ Your Holland Interest Profile</h1>
+    <p style="color: var(--gray-600);">Based on your situational responses, your dominant vocational field is:</p>
+
+    <div style="background: var(--primary-light); padding: 1.5rem; border-radius: var(--radius-md); margin: 1.5rem 0; border: 1px solid #c7d2fe;">
+        <h2 style="color: var(--primary); font-size: 1.75rem;">{{ result }}</h2>
+        <p style="color: var(--gray-700); font-size: 0.95rem; margin-top: 0.5rem;">
+            This profile aligns with careers requiring targeted analytical logic, specialized domain skills, and focused problem solving.
+        </p>
+    </div>
+
+    <div class="breakdown-bars">
+        <h3 style="font-size: 1.15rem; color: var(--dark); margin-bottom: 1.25rem;">Holland RIASEC Breakdown</h3>
+
+        {% for code, score in riasec.items() %}
+            <div class="bar-item">
+                <div class="bar-header">
+                    <span><strong>{{ code }}</strong> - {{ riasec_names.get(code, code) }}</span>
+                    <span>{{ score }}/10</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width: {{ score * 10 }}%;"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+        <a href="{{ url_for('recommendation') }}" class="btn btn-primary" style="padding: 0.9rem 2.25rem; font-size: 1.05rem;">
+            Unlock Full AI Career Recommendations 🎯
+        </a>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+            Return to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

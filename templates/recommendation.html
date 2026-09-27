@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}AI Career Recommendations{% endblock %}
+
+{% block content %}
+<div class="recommendations-wrapper">
+    <div class="recom-hero">
+        <span class="badge" style="background: rgba(255,255,255,0.2); color: #fff;">AI Insights Generated</span>
+        <h1>🎯 Your Personalized Career Matches</h1>
+        <p>
+            Based on your cognitive aptitude (<strong>{{ score }}/10</strong>) and your Holland interest profile in <strong>{{ interest }}</strong>, our machine learning engine has evaluated 20+ specialized career paths to find your best fits.
+        </p>
+
+        <div class="meta-chips">
+            <span class="meta-chip">🧠 Aptitude: {{ score }}/10</span>
+            <span class="meta-chip">❤️ Primary Field: {{ interest }}</span>
+            <span class="meta-chip">🌟 Top Match: {{ top_career }} ({{ confidence }}%)</span>
+            <a href="{{ url_for('report') }}" class="meta-chip" style="background: var(--white); color: var(--primary); text-decoration: none;">
+                📄 View Printable Report →
+            </a>
+        </div>
+    </div>
+
+    <div class="career-grid">
+        {% for career in recommendations %}
+            <div class="career-card {% if loop.first %}primary-match{% endif %}">
+                {% if loop.first %}
+                    <span class="primary-badge">🥇 #1 AI Recommendation</span>
+                {% elif loop.index == 2 %}
+                    <span class="status-badge status-completed" style="margin-bottom: 0.5rem;">🥈 Strong Alternative Match</span>
+                {% elif loop.index == 3 %}
+                    <span class="status-badge status-completed" style="margin-bottom: 0.5rem;">🥉 High Potential Path</span>
+                {% else %}
+                    <span class="status-badge status-pending" style="margin-bottom: 0.5rem;">Cross-Domain Opportunity</span>
+                {% endif %}
+
+                <div class="career-card-header">
+                    <div class="career-title-area">
+                        <h2>{{ career.title }}</h2>
+                        <span class="career-category-tag">{{ career.category }}</span>
+                    </div>
+
+                    <div class="confidence-pill">
+                        <span>{{ career.confidence }}%</span>
+                        <span style="font-size: 0.8rem; font-weight: 600; opacity: 0.85;">Match</span>
+                    </div>
+                </div>
+
+                <p class="career-desc">{{ career.description }}</p>
+
+                <!-- Insights Row -->
+                <div class="career-insights-grid">
+                    <div class="insight-item">
+                        <h4>Average Compensation</h4>
+                        <p>{{ career.avg_salary_inr }}</p>
+                    </div>
+
+                    <div class="insight-item">
+                        <h4>Market Outlook</h4>
+                        <p style="color: var(--primary);">{{ career.market_demand }}</p>
+                    </div>
+
+                    <div class="insight-item">
+                        <h4>Fit Level</h4>
+                        <p>{{ career.confidence_label }}</p>
+                    </div>
+                </div>
+
+                <!-- Match Justification -->
+                <div style="margin-bottom: 1.5rem; background: var(--gray-50); padding: 1rem 1.25rem; border-radius: var(--radius-sm); border-left: 3px solid var(--primary);">
+                    <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--gray-600); margin-bottom: 0.35rem;">Why this matches you:</h4>
+                    <ul style="padding-left: 1.25rem; font-size: 0.95rem; color: var(--gray-700);">
+                        {% for reason in career.reasons %}
+                            <li>{{ reason }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Skill Gap Analysis -->
+                <div class="skills-container">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+                        <h4 style="margin-bottom: 0;">Skill Gap Analysis</h4>
+                        <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary);">
+                            {{ career.skill_gap.match_percentage }}% Skills Acquired
+                        </span>
+                    </div>
+
+                    {% if career.skill_gap.matched_skills %}
+                        <div style="margin-bottom: 0.75rem;">
+                            <span style="font-size: 0.8rem; font-weight: 700; color: #065f46;">✅ Skills You Have:</span>
+                            <div class="chip-list" style="margin-top: 0.35rem;">
+                                {% for s in career.skill_gap.matched_skills %}
+                                    <span class="chip chip-matched">{{ s }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if career.skill_gap.missing_skills %}
+                        <div style="margin-bottom: 0.75rem;">
+                            <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary);">🎯 Key Skills to Learn Next:</span>
+                            <div class="chip-list" style="margin-top: 0.35rem;">
+                                {% for s in career.skill_gap.missing_skills %}
+                                    <span class="chip chip-missing">{{ s }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div style="margin-top: 0.75rem;">
+                        <span style="font-size: 0.8rem; font-weight: 700; color: var(--gray-600);">💡 Soft Skills Needed:</span>
+                        <div class="chip-list" style="margin-top: 0.35rem;">
+                            {% for ss in career.soft_skills %}
+                                <span class="chip chip-soft">{{ ss }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4-Phase Learning Roadmap -->
+                <div class="roadmap-section">
+                    <h4>🗺️ Step-by-Step Learning Roadmap</h4>
+                    <div class="roadmap-timeline">
+                        {% for step in career.roadmap %}
+                            <div class="timeline-step">
+                                <div class="step-number">{{ loop.index }}</div>
+                                <div class="step-content">
+                                    <div class="step-phase">{{ step.phase }}</div>
+                                    <div class="step-topics">{{ step.topics }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Free Learning Resources -->
+                <div style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px dashed var(--gray-200);">
+                    <h4 style="font-size: 0.95rem; color: var(--gray-700);">📚 Curated Free Resources & Certifications:</h4>
+                    <div class="resources-list">
+                        {% for res in career.resources %}
+                            <a href="{{ res.url }}" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                <span>🔗 {{ res.name }}</span>
+                                <span style="font-size: 0.75rem; color: var(--gray-400);">({{ res.type }})</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
+                    <a href="{{ url_for('career_detail', career_id=career.id) }}" class="btn btn-secondary btn-sm">
+                        View Detailed Career Page →
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div style="margin: 3rem 0; text-align: center;">
+        <a href="{{ url_for('report') }}" class="btn btn-primary" style="padding: 0.85rem 2rem;">
+            📄 Download Complete Career Guidance Report
+        </a>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="margin-left: 1rem;">
+            Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

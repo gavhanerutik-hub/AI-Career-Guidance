@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <div>
+            <h1>Welcome, {{ student.name }} 👋</h1>
+            <p>{{ student.class_name or 'Student' }} • {% if student.age %}{{ student.age }} years old • {% endif %}Member since {{ student.created_at.strftime('%b %Y') }}</p>
+            {% if student.get_skills_list() %}
+                <div style="margin-top: 0.75rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                    <span style="font-size: 0.85rem; font-weight: 700; color: var(--gray-600);">My Skills:</span>
+                    {% for skill in student.get_skills_list() %}
+                        <span class="chip chip-matched">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div>
+            <a href="{{ url_for('profile') }}" class="btn btn-secondary btn-sm">Edit Profile & Skills ✏️</a>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">Aptitude Score</div>
+            <div class="stat-value">
+                {% if result and result.aptitude_score %}
+                    {{ result.aptitude_score }}<span style="font-size: 1.1rem; color: var(--gray-400);">/10</span>
+                {% else %}
+                    <span style="color: var(--gray-400); font-size: 1.25rem;">Not Taken</span>
+                {% endif %}
+            </div>
+            <div class="stat-desc">
+                {% if result and result.aptitude_score %}
+                    {% if result.aptitude_score >= 8 %}Very High Proficiency 🌟{% elif result.aptitude_score >= 5 %}Moderate Proficiency 👍{% else %}Foundational Level 💪{% endif %}
+                {% else %}
+                    Takes ~5 minutes
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Dominant Interest</div>
+            <div class="stat-value" style="font-size: 1.25rem; font-weight: 700;">
+                {% if result and result.interest %}
+                    {{ result.interest }}
+                {% else %}
+                    <span style="color: var(--gray-400); font-size: 1.25rem;">Not Assessed</span>
+                {% endif %}
+            </div>
+            <div class="stat-desc">
+                {% if result and result.interest %}
+                    Holland RIASEC matched
+                {% else %}
+                    12 vocational scenarios
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Top AI Recommendation</div>
+            <div class="stat-value" style="font-size: 1.2rem; font-weight: 700; color: var(--primary);">
+                {% if result and result.career %}
+                    {{ result.career }}
+                {% else %}
+                    <span style="color: var(--gray-400); font-size: 1.25rem;">Awaiting Tests</span>
+                {% endif %}
+            </div>
+            <div class="stat-desc">
+                {% if result and result.confidence %}
+                    {{ result.confidence }}% AI match confidence
+                {% else %}
+                    Complete both assessments
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Report Status</div>
+            <div class="stat-value" style="font-size: 1.25rem;">
+                {% if result and result.career %}
+                    <span style="color: var(--success);">Ready 📄</span>
+                {% else %}
+                    <span style="color: var(--gray-400);">Incomplete</span>
+                {% endif %}
+            </div>
+            <div class="stat-desc">
+                {% if result and result.career %}
+                    <a href="{{ url_for('report') }}" style="color: var(--primary); text-decoration: none; font-weight: 600;">Download Report →</a>
+                {% else %}
+                    Unlock via recommendations
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Assessment Cards -->
+    <div class="cards-row">
+        <div class="action-card">
+            <div class="action-card-top">
+                <div class="action-card-icon">🧠</div>
+                {% if result and result.aptitude_score %}
+                    <span class="status-badge status-completed">Completed: {{ result.aptitude_score }}/10</span>
+                {% else %}
+                    <span class="status-badge status-pending">Pending</span>
+                {% endif %}
+                <h3>Aptitude Assessment</h3>
+                <p>Test your quantitative reasoning, logical deduction, verbal comprehension, and technical problem-solving capabilities.</p>
+            </div>
+            <a href="{{ url_for('aptitude') }}" class="btn btn-primary btn-block">
+                {% if result and result.aptitude_score %}Retake Aptitude Test 🔄{% else %}Start Aptitude Test 🚀{% endif %}
+            </a>
+        </div>
+
+        <div class="action-card">
+            <div class="action-card-top">
+                <div class="action-card-icon">❤️</div>
+                {% if result and result.interest %}
+                    <span class="status-badge status-completed">Completed: {{ result.interest }}</span>
+                {% else %}
+                    <span class="status-badge status-pending">Pending</span>
+                {% endif %}
+                <h3>Holland Interest Profile</h3>
+                <p>Explore your vocational passions across Realistic, Investigative, Artistic, Social, Enterprising, and Conventional spheres.</p>
+            </div>
+            <a href="{{ url_for('interest') }}" class="btn btn-primary btn-block">
+                {% if result and result.interest %}Retake Interest Assessment 🔄{% else %}Start Interest Test 🎯{% endif %}
+            </a>
+        </div>
+
+        <div class="action-card">
+            <div class="action-card-top">
+                <div class="action-card-icon">🤖</div>
+                {% if result and result.career %}
+                    <span class="status-badge status-completed">{{ result.confidence }}% Top Match</span>
+                {% else %}
+                    <span class="status-badge status-pending">Requires Assessments</span>
+                {% endif %}
+                <h3>AI Career Matches & Roadmaps</h3>
+                <p>Access your personalized career matches, skill gap analysis, compensation insights, and milestone-by-milestone learning guides.</p>
+            </div>
+            {% if result and result.interest %}
+                <a href="{{ url_for('recommendation') }}" class="btn btn-success btn-block">View Recommendations 🎯</a>
+            {% else %}
+                <a href="{{ url_for('aptitude' if not (result and result.aptitude_score) else 'interest') }}" class="btn btn-secondary btn-block">Complete Tests First</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Chart Visualization Section if results exist -->
+    {% if result and result.aptitude_score %}
+        <div style="background: var(--white); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm); margin-bottom: 2rem;">
+            <h3 style="font-size: 1.3rem; color: var(--dark); margin-bottom: 1.5rem;">📊 Assessment Analytics & Trait Breakdown</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div>
+                    <h4 style="font-size: 1rem; color: var(--gray-600); margin-bottom: 1rem; text-align: center;">Aptitude Strengths by Domain</h4>
+                    <canvas id="aptitudeChart" height="200"></canvas>
+                </div>
+                {% if result.interest %}
+                    <div>
+                        <h4 style="font-size: 1rem; color: var(--gray-600); margin-bottom: 1rem; text-align: center;">Holland RIASEC Interest Radar</h4>
+                        <canvas id="riasecChart" height="200"></canvas>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% if result and result.aptitude_score %}
+<script>
+    // Aptitude Bar Chart
+    const ctxApt = document.getElementById('aptitudeChart');
+    if (ctxApt) {
+        new Chart(ctxApt, {
+            type: 'bar',
+            data: {
+                labels: ['Numerical', 'Logical', 'Verbal', 'Technical'],
+                datasets: [{
+                    label: 'Score (out of 10)',
+                    data: [
+                        {{ result.numerical_score or 5 }},
+                        {{ result.logical_score or 5 }},
+                        {{ result.verbal_score or 5 }},
+                        {{ result.technical_score or 5 }}
+                    ],
+                    backgroundColor: [
+                        'rgba(79, 70, 229, 0.75)',
+                        'rgba(6, 182, 212, 0.75)',
+                        'rgba(139, 92, 246, 0.75)',
+                        'rgba(16, 185, 129, 0.75)'
+                    ],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    }
+                }
+            }
+        });
+    }
+
+    // RIASEC Radar Chart
+    {% if result.interest %}
+    const ctxRia = document.getElementById('riasecChart');
+    if (ctxRia) {
+        {% set rdict = result.get_riasec_dict() %}
+        new Chart(ctxRia, {
+            type: 'radar',
+            data: {
+                labels: ['Realistic', 'Investigative', 'Artistic', 'Social', 'Enterprising', 'Conventional'],
+                datasets: [{
+                    label: 'Interest Intensity (0-10)',
+                    data: [
+                        {{ rdict.get('R', 3) }},
+                        {{ rdict.get('I', 3) }},
+                        {{ rdict.get('A', 3) }},
+                        {{ rdict.get('S', 3) }},
+                        {{ rdict.get('E', 3) }},
+                        {{ rdict.get('C', 3) }}
+                    ],
+                    fill: true,
+                    backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                    borderColor: 'rgb(79, 70, 229)',
+                    pointBackgroundColor: 'rgb(79, 70, 229)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(79, 70, 229)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10,
+                        ticks: { stepSize: 2 }
+                    }
+                }
+            }
+        });
+    }
+    {% endif %}
+</script>
+{% endif %}
+{% endblock %}

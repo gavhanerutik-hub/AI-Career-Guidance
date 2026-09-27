@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="badge">🚀 Powered by AI & Machine Learning</div>
+    <h1>
+        Discover Your Ideal <span>Career Path</span>
+    </h1>
+    <p>
+        Uncover your strengths, analyze your aptitude, evaluate your vocational interests using Holland RIASEC codes, and let our machine learning engine recommend tailored careers with step-by-step learning roadmaps.
+    </p>
+
+    <div class="hero-actions">
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Go to Dashboard →</a>
+            <a href="{{ url_for('recommendation') }}" class="btn btn-secondary">View Career Matches</a>
+        {% else %}
+            <a href="{{ url_for('register') }}" class="btn btn-primary">Get Started Free →</a>
+            <a href="{{ url_for('login') }}" class="btn btn-secondary">Student Login</a>
+        {% endif %}
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="features-grid">
+        <div class="feature-card">
+            <span class="feature-icon">🧠</span>
+            <h3>Multi-Domain Aptitude</h3>
+            <p>Assess your abilities across Quantitative, Logical Reasoning, Verbal, and Technical problem solving.</p>
+        </div>
+
+        <div class="feature-card">
+            <span class="feature-icon">❤️</span>
+            <h3>Holland RIASEC Interests</h3>
+            <p>12-scenario vocational personality assessment mapping your intrinsic passions to real career clusters.</p>
+        </div>
+
+        <div class="feature-card">
+            <span class="feature-icon">🤖</span>
+            <h3>ML Recommendation Engine</h3>
+            <p>Cosine similarity & multi-factor machine learning engine ranking top career fits with confidence scores.</p>
+        </div>
+
+        <div class="feature-card">
+            <span class="feature-icon">🛣️</span>
+            <h3>Actionable 4-Phase Roadmaps</h3>
+            <p>Detailed step-by-step guidance from beginner fundamentals to portfolio building, salary insights, and free courses.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="form-wrapper" style="max-width: 580px;">
+    <div class="form-header">
+        <h2>👤 Student Profile</h2>
+        <p>Keep your profile and skills up-to-date for accurate career recommendations.</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('profile') }}">
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" class="form-control" value="{{ student.name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" class="form-control" value="{{ student.email }}" disabled style="background-color: var(--gray-100);">
+            <small style="color: var(--gray-400);">Email cannot be changed.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" class="form-control" value="{{ student.age or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="class_name">Education / Academic Stream</label>
+            <select id="class_name" name="class_name" class="form-control">
+                {% set streams = [
+                    "10th Standard",
+                    "12th Science",
+                    "12th Commerce",
+                    "12th Arts",
+                    "B.Tech / B.E. (Engineering)",
+                    "B.Sc / BCA (Computer/Science)",
+                    "B.Com / BBA (Business/Finance)",
+                    "BA / Humanities / Design",
+                    "Postgraduate / Master's"
+                ] %}
+                {% for stream in streams %}
+                    <option value="{{ stream }}" {% if student.class_name == stream %}selected{% endif %}>{{ stream }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="skills">Your Current Skills (comma-separated)</label>
+            <input type="text" id="skills" name="skills" class="form-control" value="{{ student.skills or '' }}" placeholder="e.g. Python, SQL, Git, Figma, Communication, Financial Analysis">
+            <small style="color: var(--gray-400); font-size: 0.82rem;">Updating your skills will dynamically recalculate your Skill Gap for recommended careers.</small>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">Save Changes</button>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Aptitude Assessment{% endblock %}
+
+{% block content %}
+<div class="assessment-container">
+    <div class="assessment-intro">
+        <span class="badge">Cognitive Evaluation</span>
+        <h1>🧠 Multi-Domain Aptitude Assessment</h1>
+        <p>Answer all 10 questions covering Numerical Ability, Logical Reasoning, Verbal Comprehension, and Technical Thinking.</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('aptitude') }}">
+        {% for question in questions %}
+            <div class="question-block">
+                <div class="question-header">
+                    <span class="question-title">Question {{ loop.index }} of {{ questions|length }}</span>
+                    <span class="category-tag">{{ question.category_name }}</span>
+                </div>
+
+                <p style="font-size: 1.05rem; font-weight: 600; color: var(--dark); margin-bottom: 1.25rem;">
+                    {{ question.question }}
+                </p>
+
+                <div class="options-group">
+                    {% for option in question.options %}
+                        <label class="option-label">
+                            <input
+                                type="radio"
+                                name="question_{{ question.id }}"
+                                value="{{ option }}"
+                                required
+                            >
+                            <span>{{ option }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary" style="padding: 0.9rem 2.5rem; font-size: 1.1rem;">
+                Submit Aptitude Test & View Results →
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
