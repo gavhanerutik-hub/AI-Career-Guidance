@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Explore 22+ Modern Careers{% endblock %}
+
+{% block content %}
+<div class="recommendations-wrapper" style="max-width: 1200px;">
+    <!-- Catalog Header -->
+    <div style="text-align: center; margin-bottom: 2.5rem;">
+        <span class="badge">Comprehensive Directory</span>
+        <h1 style="font-size: 2.4rem; color: var(--dark); margin-top: 0.5rem;">
+            Explore High-Growth <span>Modern Careers</span>
+        </h1>
+        <p style="color: var(--gray-600); font-size: 1.1rem; max-width: 720px; margin: 0.75rem auto 0;">
+            Browse our curated knowledge base of 22+ future-ready career trajectories across Technology, Creative Arts, Business, Engineering, and Healthcare.
+        </p>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem; box-shadow: var(--shadow-sm);">
+        <form method="GET" action="{{ url_for('careers_catalog') }}" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem;">
+            <div style="flex: 1; min-width: 260px;">
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Search by career title, skill (e.g. Python, Figma, AI, Finance)..."
+                    value="{{ search_query }}"
+                    class="form-control"
+                    style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); font-size: 1rem;"
+                >
+            </div>
+            {% if selected_category %}
+                <input type="hidden" name="category" value="{{ selected_category }}">
+            {% endif %}
+            <button type="submit" class="btn btn-primary" style="padding: 0.75rem 1.5rem;">
+                🔍 Search
+            </button>
+            {% if search_query or selected_category %}
+                <a href="{{ url_for('careers_catalog') }}" class="btn btn-secondary" style="padding: 0.75rem 1.25rem;">
+                    Reset Filters
+                </a>
+            {% endif %}
+        </form>
+
+        <!-- Category Filter Pills -->
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--gray-600); margin-right: 0.25rem;">Category:</span>
+            <a
+                href="{{ url_for('careers_catalog', q=search_query) }}"
+                class="category-pill {% if not selected_category %}category-pill-active{% endif %}"
+            >
+                All ({{ total_careers }})
+            </a>
+            {% for cat in categories %}
+                <a
+                    href="{{ url_for('careers_catalog', category=cat, q=search_query) }}"
+                    class="category-pill {% if selected_category == cat %}category-pill-active{% endif %}"
+                >
+                    {{ cat }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Career Cards Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem;">
+        {% for c in careers %}
+            <div class="career-card" style="margin: 0; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.75rem;">
+                        <span class="career-category-tag" style="margin: 0;">{{ c.category }}</span>
+                        {% if c.user_match_pct is defined %}
+                            <span style="background: {% if c.user_match_pct >= 60 %}#dcfce7; color: #15803d;{% else %}#e0e7ff; color: #4338ca;{% endif %}; font-weight: 700; font-size: 0.8rem; padding: 0.25rem 0.65rem; border-radius: var(--radius-full);">
+                                🎯 {{ c.user_match_pct }}% Skill Match
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <h2 style="font-size: 1.35rem; color: var(--dark); margin-bottom: 0.5rem;">{{ c.title }}</h2>
+                    <p style="color: var(--gray-600); font-size: 0.92rem; line-height: 1.5; margin-bottom: 1.25rem;">
+                        {{ c.description }}
+                    </p>
+
+                    <!-- Key Insights Grid -->
+                    <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-sm); padding: 0.85rem 1rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--gray-500); text-transform: uppercase; font-weight: 700;">Avg Salary</span>
+                            <div style="font-size: 0.9rem; font-weight: 700; color: var(--dark);">{{ c.avg_salary_inr }}</div>
+                        </div>
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--gray-500); text-transform: uppercase; font-weight: 700;">Market Outlook</span>
+                            <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary);">{{ c.market_demand.split('(')[0] }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Skills Chips Preview -->
+                    <div style="margin-bottom: 1.5rem;">
+                        <span style="font-size: 0.8rem; font-weight: 700; color: var(--gray-500); text-transform: uppercase;">Required Skills:</span>
+                        <div class="chip-list" style="margin-top: 0.4rem;">
+                            {% for sk in c.required_skills[:5] %}
+                                <span class="chip" style="font-size: 0.78rem;">{{ sk }}</span>
+                            {% endfor %}
+                            {% if c.required_skills|length > 5 %}
+                                <span class="chip" style="font-size: 0.78rem; background: var(--gray-200); color: var(--gray-700);">+{{ c.required_skills|length - 5 }} more</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem; pt-3; border-top: 1px solid var(--gray-200); padding-top: 1rem;">
+                    <a href="{{ url_for('career_detail', career_id=c.id) }}" class="btn btn-primary btn-block" style="text-align: center;">
+                        View 4-Phase Roadmap & Skill Gap →
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; background: var(--white); border-radius: var(--radius-md); border: 1px solid var(--gray-200);">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                <h3>No careers found matching your criteria</h3>
+                <p style="color: var(--gray-600); margin-top: 0.5rem;">Try adjusting your keyword or clearing the category filter.</p>
+                <div style="margin-top: 1.5rem;">
+                    <a href="{{ url_for('careers_catalog') }}" class="btn btn-secondary">Clear Filters</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

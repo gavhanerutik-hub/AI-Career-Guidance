@@ -224,6 +224,79 @@ class CareerPlatformTestCase(unittest.TestCase):
         self.assertIn(b"Official Career Assessment Report", report_resp.data)
         self.assertIn(b"Neha Gupta", report_resp.data)
 
+    # -----------------------------------------------------------------------
+    # 4. Expanded Features Tests: Holland Code, Catalog & Skill API
+    # -----------------------------------------------------------------------
+
+    def test_holland_profile_generation(self):
+        """Verify Holland 3-letter code and archetype persona generation."""
+        riasec_scores = {"R": 8, "I": 9, "A": 3, "S": 2, "E": 4, "C": 7}
+        profile = ai.calculate_holland_profile(riasec_scores)
+
+        self.assertIn("code", profile)
+        self.assertEqual(len(profile["code"]), 3)
+        self.assertEqual(profile["code"][:2], "IR")
+        self.assertIn("persona", profile)
+        self.assertIn("title", profile["persona"])
+        self.assertIn("tagline", profile["persona"])
+        self.assertIn("motivators", profile["persona"])
+
+    def test_careers_catalog_page_and_search(self):
+        """Verify careers directory renders and filters correctly."""
+        # Test default catalog view
+        resp = self.client.get("/careers")
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn(b"Explore High-Growth", resp.data)
+        self.assertIn(b"Software Engineer", resp.data)
+
+        # Test search query
+        search_resp = self.client.get("/careers?q=Python")
+        self.assertEqual(search_resp.status_code, 200)
+        self.assertIn(b"Software Engineer", search_resp.data)
+
+        # Test category filter
+        cat_resp = self.client.get("/careers?category=Design%20%26%20Creative%20Arts")
+        self.assertEqual(cat_resp.status_code, 200)
+        self.assertIn(b"UI/UX Designer", cat_resp.data)
+
+    def test_api_add_skill_endpoint(self):
+        """Verify the interactive 1-click skill addition API."""
+        # Register and log in
+        self.client.post("/register", data={
+            "name": "Kavya Sharma",
+            "email": "kavya@example.com",
+            "password": "Password123"
+        })
+
+        # Add skill via API
+        resp = self.client.post(
+            "/api/add_skill",
+            data=json.dumps({"skill": "Docker"}),
+            content_type="application/json"
+        )
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.data)
+        self.assertTrue(data["success"])
+        self.assertIn("Docker", data["skills"])
+
+        # Verify persistence in database
+        with app.app_context():
+            student = Student.query.filter_by(email="kavya@example.com").first()
+            self.assertIn("Docker", student.get_skills_list())
+
+    def test_knowledge_base_expansion_depth(self):
+        """Verify the career engine contains 20+ specialized high-growth careers."""
+        all_careers = ai.get_all_careers()
+        self.assertGreaterEqual(len(all_careers), 20)
+
+        for career in all_careers:
+            self.assertIn("title", career)
+            self.assertIn("category", career)
+            self.assertIn("avg_salary_inr", career)
+            self.assertIn("market_demand", career)
+            self.assertGreaterEqual(len(career.get("required_skills", [])), 3)
+            self.assertEqual(len(career.get("roadmap", [])), 4)
+
 
 if __name__ == "__main__":
     unittest.main()

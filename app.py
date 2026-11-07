@@ -65,10 +65,12 @@ class TestResult(db.Model):
     logical_score = db.Column(db.Integer, default=0)
     verbal_score = db.Column(db.Integer, default=0)
     technical_score = db.Column(db.Integer, default=0)
+    aptitude_answers_json = db.Column(db.Text, nullable=True)
 
     # Interest & RIASEC
     interest = db.Column(db.String(100), nullable=True)
     riasec_json = db.Column(db.Text, nullable=True)
+    holland_code = db.Column(db.String(10), nullable=True)
 
     # Recommendations
     career = db.Column(db.String(150), nullable=True)
@@ -84,6 +86,14 @@ class TestResult(db.Model):
             return json.loads(self.riasec_json)
         except Exception:
             return {"R": 0, "I": 0, "A": 0, "S": 0, "E": 0, "C": 0}
+
+    def get_aptitude_answers_dict(self):
+        if not self.aptitude_answers_json:
+            return {}
+        try:
+            return json.loads(self.aptitude_answers_json)
+        except Exception:
+            return {}
 
     def get_recommendations_list(self):
         if not self.recommendations_json:
@@ -111,7 +121,8 @@ APTITUDE_QUESTIONS = [
         "category_name": "Numerical Ability",
         "question": "A laptop originally priced at $800 is offered with a 25% discount. What is its final sale price?",
         "options": ["$550", "$600", "$650", "$700"],
-        "answer": "$600"
+        "answer": "$600",
+        "explanation": "Discount = 25% of $800 = 0.25 × $800 = $200. Final sale price = $800 - $200 = $600."
     },
     {
         "id": 2,
@@ -119,7 +130,8 @@ APTITUDE_QUESTIONS = [
         "category_name": "Numerical Ability",
         "question": "If a vehicle travels 240 kilometers in 3 hours, what is its average speed?",
         "options": ["70 km/h", "75 km/h", "80 km/h", "85 km/h"],
-        "answer": "80 km/h"
+        "answer": "80 km/h",
+        "explanation": "Average Speed = Distance / Time = 240 km / 3 hours = 80 km/h."
     },
     {
         "id": 3,
@@ -127,7 +139,8 @@ APTITUDE_QUESTIONS = [
         "category_name": "Numerical Ability",
         "question": "What is the next number in the geometric series: 3, 9, 27, 81, ?",
         "options": ["162", "216", "243", "324"],
-        "answer": "243"
+        "answer": "243",
+        "explanation": "Each term is multiplied by 3 (ratio = 3): 3 × 3 = 9, 9 × 3 = 27, 27 × 3 = 81, 81 × 3 = 243."
     },
     # Logical Reasoning (3 questions)
     {
@@ -136,7 +149,8 @@ APTITUDE_QUESTIONS = [
         "category_name": "Logical Reasoning",
         "question": "Identify the number that continues the pattern: 2, 6, 12, 20, 30, ?",
         "options": ["38", "40", "42", "44"],
-        "answer": "42"
+        "answer": "42",
+        "explanation": "Differences between consecutive terms increase by 2: +4, +6, +8, +10. Next difference is +12, so 30 + 12 = 42 (or n × (n + 1): 1×2=2, 2×3=6, 3×4=12, 4×5=20, 5×6=30, 6×7=42)."
     },
     {
         "id": 5,
@@ -149,7 +163,8 @@ APTITUDE_QUESTIONS = [
             "Maya cannot be an engineer",
             "Software engineers are the only problem solvers"
         ],
-        "answer": "Maya might be a software engineer"
+        "answer": "Maya might be a software engineer",
+        "explanation": "All software engineers solve problems, but other professions also solve problems. Maya solves problems, so she could be an engineer, but isn't necessarily one."
     },
     {
         "id": 6,
@@ -157,7 +172,8 @@ APTITUDE_QUESTIONS = [
         "category_name": "Logical Reasoning",
         "question": "Algorithm is to Software as Blueprint is to: ?",
         "options": ["Computer", "Building", "Code", "Contractor"],
-        "answer": "Building"
+        "answer": "Building",
+        "explanation": "An algorithm is the structural architectural design plan for software, just as a blueprint is the design plan for a physical building."
     },
     # Verbal Comprehension (2 questions)
     {
@@ -166,7 +182,8 @@ APTITUDE_QUESTIONS = [
         "category_name": "Verbal Ability",
         "question": "Choose the word most nearly OPPOSITE in meaning to 'INNOVATIVE':",
         "options": ["Creative", "Conventional", "Dynamic", "Pioneering"],
-        "answer": "Conventional"
+        "answer": "Conventional",
+        "explanation": "'Innovative' describes something original, groundbreaking, or new. 'Conventional' means conforming to accepted rules or standard tradition (its antonym)."
     },
     {
         "id": 8,
@@ -174,7 +191,8 @@ APTITUDE_QUESTIONS = [
         "category_name": "Verbal Ability",
         "question": "Fill in the blank: Successful leaders provide _______ guidance that eliminates team ambiguity.",
         "options": ["lucid", "cryptic", "superfluous", "obscure"],
-        "answer": "lucid"
+        "answer": "lucid",
+        "explanation": "'Lucid' means completely clear, intelligible, and easy to understand, directly eliminating ambiguity."
     },
     # Technical & Computational Thinking (2 questions)
     {
@@ -183,7 +201,8 @@ APTITUDE_QUESTIONS = [
         "category_name": "Technical Thinking",
         "question": "In an unsorted list of 100 items, what is the maximum number of comparisons needed to find a specific element in the worst case?",
         "options": ["10", "50", "100", "1000"],
-        "answer": "100"
+        "answer": "100",
+        "explanation": "In an unsorted collection, linear search must check elements one by one. In the worst case (item is at the end or absent), exactly 100 comparisons are made (O(N))."
     },
     {
         "id": 10,
@@ -191,7 +210,8 @@ APTITUDE_QUESTIONS = [
         "category_name": "Technical Thinking",
         "question": "If Condition A is True and Condition B is False, what does the Boolean expression 'not (A and B)' evaluate to?",
         "options": ["True", "False", "Error", "Undefined"],
-        "answer": "True"
+        "answer": "True",
+        "explanation": "Condition (True and False) evaluates to False. Then 'not (False)' evaluates to True."
     }
 ]
 
@@ -409,10 +429,15 @@ def dashboard():
         student_id=current_user.id
     ).order_by(TestResult.id.desc()).first()
 
+    holland_profile = None
+    if latest_result and latest_result.interest:
+        holland_profile = ai.calculate_holland_profile(latest_result.get_riasec_dict())
+
     return render_template(
         "dashboard.html",
         student=current_user,
-        result=latest_result
+        result=latest_result,
+        holland_profile=holland_profile
     )
 
 
@@ -448,13 +473,20 @@ def aptitude():
             "verbal": 0,
             "technical": 0
         }
+        answers_record = {}
 
         for q in APTITUDE_QUESTIONS:
             qid = q["id"]
             user_ans = request.form.get(f"question_{qid}")
-            if user_ans == q["answer"]:
+            is_correct = (user_ans == q["answer"])
+            if is_correct:
                 total_score += 1
                 cat_scores[q["category"]] += 1
+            answers_record[str(qid)] = {
+                "selected": user_ans,
+                "correct": q["answer"],
+                "is_correct": is_correct
+            }
 
         # Normalize category scores to a 10-point scale for weighting
         numerical_norm = int(round((cat_scores["numerical"] / 3.0) * 10))
@@ -477,6 +509,7 @@ def aptitude():
         test_result.logical_score = logical_norm
         test_result.verbal_score = verbal_norm
         test_result.technical_score = technical_norm
+        test_result.aptitude_answers_json = json.dumps(answers_record)
         test_result.created_at = datetime.now(timezone.utc)
 
         db.session.commit()
@@ -501,6 +534,8 @@ def aptitude_result():
         flash("Please take the Aptitude Test first.", "warning")
         return redirect(url_for("aptitude"))
 
+    answers_record = result.get_aptitude_answers_dict()
+
     return render_template(
         "aptitude_result.html",
         score=result.aptitude_score,
@@ -508,7 +543,9 @@ def aptitude_result():
         numerical=result.numerical_score,
         logical=result.logical_score,
         verbal=result.verbal_score,
-        technical=result.technical_score
+        technical=result.technical_score,
+        questions=APTITUDE_QUESTIONS,
+        answers_record=answers_record
     )
 
 
@@ -536,11 +573,6 @@ def interest():
         }
 
         # Map top traits to dominant category
-        # Holland code grouping:
-        # High I / R -> Tech
-        # High A -> Creative Arts
-        # High S -> Healthcare & Social
-        # High E / C -> Business & Management
         category_weights = {
             "Technology & Computer Science": riasec_counts["I"] * 1.5 + riasec_counts["R"] * 1.2,
             "Design & Creative Arts": riasec_counts["A"] * 2.0 + riasec_counts["I"] * 0.5,
@@ -566,9 +598,13 @@ def interest():
             )
             db.session.add(test_result)
 
+        # Compute Holland Profile (3-letter Holland code and archetype persona)
+        holland_profile = ai.calculate_holland_profile(riasec_scaled)
+
         # Update interest details in database
         test_result.interest = dominant_category
         test_result.riasec_json = json.dumps(riasec_scaled)
+        test_result.holland_code = holland_profile["code"]
 
         # Generate AI recommendations
         aptitude_dict = {
@@ -615,12 +651,14 @@ def interest_result():
         return redirect(url_for("interest"))
 
     riasec_data = result.get_riasec_dict()
+    holland_profile = ai.calculate_holland_profile(riasec_data)
 
     return render_template(
         "interest_result.html",
         result=result.interest,
         riasec=riasec_data,
-        riasec_names=ai.RIASEC_NAMES
+        riasec_names=ai.RIASEC_NAMES,
+        holland_profile=holland_profile
     )
 
 
@@ -677,6 +715,72 @@ def recommendation():
     )
 
 
+@app.route("/careers")
+def careers_catalog():
+    query = request.args.get("q", "").strip().lower()
+    selected_cat = request.args.get("category", "").strip()
+
+    all_careers = ai.get_all_careers()
+    categories = sorted(list(ai.CATEGORY_MAP.keys()))
+
+    user_skills = current_user.get_skills_list() if current_user.is_authenticated else []
+
+    filtered = []
+    for c in all_careers:
+        # Category filter
+        if selected_cat and c["category"] != selected_cat:
+            continue
+
+        # Search query filter (title, description, required_skills)
+        if query:
+            match_title = query in c["title"].lower()
+            match_desc = query in c["description"].lower()
+            match_skills = any(query in sk.lower() for sk in c.get("required_skills", []))
+            if not (match_title or match_desc or match_skills):
+                continue
+
+        # Calculate skill match for authenticated students
+        c_copy = dict(c)
+        if user_skills:
+            gap = ai.calculate_skill_gap(c, user_skills)
+            c_copy["user_match_pct"] = gap["match_percentage"]
+            c_copy["matched_skills_count"] = len(gap["matched_skills"])
+            c_copy["total_skills_count"] = len(c.get("required_skills", []))
+        filtered.append(c_copy)
+
+    return render_template(
+        "careers.html",
+        careers=filtered,
+        categories=categories,
+        selected_category=selected_cat,
+        search_query=query,
+        total_careers=len(all_careers)
+    )
+
+
+@app.route("/api/add_skill", methods=["POST"])
+@login_required
+def api_add_skill():
+    data = request.get_json() or {}
+    new_skill = data.get("skill", "").strip()
+
+    if not new_skill:
+        return jsonify({"success": False, "message": "No skill provided"}), 400
+
+    existing_skills = current_user.get_skills_list()
+    # Check if skill already present (case-insensitive)
+    if not any(s.lower() == new_skill.lower() for s in existing_skills):
+        existing_skills.append(new_skill)
+        current_user.skills = ", ".join(existing_skills)
+        db.session.commit()
+
+    return jsonify({
+        "success": True,
+        "skills": current_user.get_skills_list(),
+        "added_skill": new_skill
+    })
+
+
 @app.route("/career/<career_id>")
 @login_required
 def career_detail(career_id):
@@ -707,6 +811,8 @@ def report():
 
     recommendations = result.get_recommendations_list()
     primary = recommendations[0] if recommendations else None
+    riasec_dict = result.get_riasec_dict()
+    holland_profile = ai.calculate_holland_profile(riasec_dict)
 
     return render_template(
         "report.html",
@@ -714,17 +820,30 @@ def report():
         result=result,
         primary=primary,
         recommendations=recommendations,
-        riasec=result.get_riasec_dict(),
-        riasec_names=ai.RIASEC_NAMES
+        riasec=riasec_dict,
+        riasec_names=ai.RIASEC_NAMES,
+        holland_profile=holland_profile
     )
 
 
 # ---------------------------------------------------------------------------
-# INITIALIZATION
+# INITIALIZATION & SAFE MIGRATIONS
 # ---------------------------------------------------------------------------
 
 with app.app_context():
     db.create_all()
+    # Ensure added columns exist in sqlite if table existed before
+    try:
+        from sqlalchemy import text
+        with db.engine.connect() as conn:
+            cols = [row[1] for row in conn.execute(text("PRAGMA table_info(test_result);")).fetchall()]
+            if "aptitude_answers_json" not in cols:
+                conn.execute(text("ALTER TABLE test_result ADD COLUMN aptitude_answers_json TEXT;"))
+            if "holland_code" not in cols:
+                conn.execute(text("ALTER TABLE test_result ADD COLUMN holland_code VARCHAR(10);"))
+            conn.commit()
+    except Exception:
+        pass
 
 
 if __name__ == "__main__":

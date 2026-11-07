@@ -19,3 +19,6 @@ instance/*.db
 Thumbs.db
 .vscode/
 .idea/
+
+# Nested clones/backups
+/AI-Career-Guidance/

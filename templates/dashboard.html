@@ -17,7 +17,8 @@
                 </div>
             {% endif %}
         </div>
-        <div>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="{{ url_for('careers_catalog') }}" class="btn btn-primary btn-sm">Explore All 22+ Careers 📚</a>
             <a href="{{ url_for('profile') }}" class="btn btn-secondary btn-sm">Edit Profile & Skills ✏️</a>
         </div>
     </div>
@@ -43,17 +44,18 @@
         </div>
 
         <div class="stat-card">
-            <div class="stat-label">Dominant Interest</div>
+            <div class="stat-label">Holland Interest Code</div>
             <div class="stat-value" style="font-size: 1.25rem; font-weight: 700;">
                 {% if result and result.interest %}
-                    {{ result.interest }}
+                    <span style="color: var(--primary);">{{ holland_profile.code if holland_profile else (result.holland_code or 'RIA') }}</span>
+                    <span style="font-size: 0.92rem; color: var(--gray-700); font-weight: 600; display: block; margin-top: 0.2rem;">{{ result.interest }}</span>
                 {% else %}
                     <span style="color: var(--gray-400); font-size: 1.25rem;">Not Assessed</span>
                 {% endif %}
             </div>
             <div class="stat-desc">
                 {% if result and result.interest %}
-                    Holland RIASEC matched
+                    {{ holland_profile.persona.title if holland_profile else 'Holland RIASEC matched' }}
                 {% else %}
                     12 vocational scenarios
                 {% endif %}

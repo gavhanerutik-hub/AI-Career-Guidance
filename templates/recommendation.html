@@ -15,6 +15,9 @@
             <span class="meta-chip">🧠 Aptitude: {{ score }}/10</span>
             <span class="meta-chip">❤️ Primary Field: {{ interest }}</span>
             <span class="meta-chip">🌟 Top Match: {{ top_career }} ({{ confidence }}%)</span>
+            <a href="{{ url_for('careers_catalog') }}" class="meta-chip" style="background: rgba(255, 255, 255, 0.2); color: #fff; text-decoration: none;">
+                📚 Explore All 22+ Careers
+            </a>
             <a href="{{ url_for('report') }}" class="meta-chip" style="background: var(--white); color: var(--primary); text-decoration: none;">
                 📄 View Printable Report →
             </a>

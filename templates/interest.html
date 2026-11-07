@@ -7,18 +7,29 @@
     <div class="assessment-intro">
         <span class="badge">Vocational Personality</span>
         <h1>❤️ Holland RIASEC Career Interest Assessment</h1>
-        <p>Choose the option in each of the 12 scenarios that best reflects your genuine passion, working style, and curiosity.</p>
+        <p>Choose the option in each of the 12 real-world scenarios that best reflects your genuine passion, working style, and curiosity.</p>
+        
+        <!-- Live Progress Tracker -->
+        <div class="quiz-tracker" style="margin-top: 1.5rem; background: var(--white); padding: 1rem 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm);">
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem;">
+                <span id="progressText">Progress: 0 of {{ questions|length }} Scenarios Evaluated</span>
+                <span id="progressPercent" style="color: var(--primary);">0% Complete</span>
+            </div>
+            <div style="height: 8px; background: var(--gray-200); border-radius: var(--radius-full); overflow: hidden;">
+                <div id="quizProgressBar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #ec4899 0%, var(--primary) 100%); transition: width 0.3s ease;"></div>
+            </div>
+        </div>
     </div>
 
-    <form method="POST" action="{{ url_for('interest') }}">
+    <form method="POST" action="{{ url_for('interest') }}" id="interestForm">
         {% for question in questions %}
-            <div class="question-block">
+            <div class="question-block" id="block_{{ question.id }}">
                 <div class="question-header">
                     <span class="question-title">Scenario {{ loop.index }} of {{ questions|length }}</span>
-                    <span class="category-tag">Career Interest</span>
+                    <span class="category-tag">Vocational Preference</span>
                 </div>
 
-                <p style="font-size: 1.05rem; font-weight: 600; color: var(--dark); margin-bottom: 1.25rem;">
+                <p style="font-size: 1.05rem; font-weight: 600; color: var(--dark); margin-bottom: 1.25rem; line-height: 1.5;">
                     {{ question.question }}
                 </p>
 
@@ -30,6 +41,8 @@
                                 name="question_{{ question.id }}"
                                 value="{{ option.code }}"
                                 required
+                                class="quiz-option"
+                                data-qid="{{ question.id }}"
                             >
                             <span>{{ option.text }}</span>
                         </label>
@@ -38,11 +51,42 @@
             </div>
         {% endfor %}
 
-        <div style="text-align: center; margin-top: 2rem;">
-            <button type="submit" class="btn btn-primary" style="padding: 0.9rem 2.5rem; font-size: 1.1rem;">
+        <div style="text-align: center; margin-top: 2.5rem; margin-bottom: 2rem;">
+            <button type="submit" class="btn btn-primary" style="padding: 1rem 3rem; font-size: 1.15rem; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);">
                 Submit Assessment & Generate Career Matches 🚀
             </button>
         </div>
     </form>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const totalQuestions = {{ questions|length }};
+        const radios = document.querySelectorAll(".quiz-option");
+        const progressBar = document.getElementById("quizProgressBar");
+        const progressText = document.getElementById("progressText");
+        const progressPercent = document.getElementById("progressPercent");
+
+        function updateProgress() {
+            const answeredQids = new Set();
+            document.querySelectorAll(".quiz-option:checked").forEach((el) => {
+                answeredQids.add(el.getAttribute("data-qid"));
+            });
+            const answeredCount = answeredQids.size;
+            const pct = Math.round((answeredCount / totalQuestions) * 100);
+
+            if (progressBar) progressBar.style.width = pct + "%";
+            if (progressText) progressText.textContent = `Progress: ${answeredCount} of ${totalQuestions} Scenarios Evaluated`;
+            if (progressPercent) progressPercent.textContent = `${pct}% Complete`;
+        }
+
+        radios.forEach((r) => {
+            r.addEventListener("change", updateProgress);
+        });
+
+        updateProgress();
+    });
+</script>
 {% endblock %}

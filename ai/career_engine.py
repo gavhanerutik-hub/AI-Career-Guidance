@@ -491,6 +491,278 @@ CAREER_DATABASE: Dict[str, Dict[str, Any]] = {
             {"name": "CDC Learning Connection", "type": "Public Health Hub", "url": "https://www.cdc.gov/learning/"},
             {"name": "Johns Hopkins Public Health Online", "type": "Course Materials", "url": "https://publichealth.jhu.edu/"}
         ]
+    },
+
+    "robotics_automation_engineer": {
+        "title": "Robotics & Automation Engineer",
+        "category": "Engineering & Emerging Tech",
+        "description": "Design, program, and operate intelligent autonomous robots, robotic arms, sensors, and factory automation pipelines.",
+        "vector": [0.90, 0.90, 0.60, 0.95, 0.95, 0.85, 0.3, 0.3, 0.4, 0.7],
+        "required_skills": ["ROS (Robot Operating System)", "C++", "Python", "Kinematics & Dynamics", "Microcontrollers & Arduino", "Computer Vision", "Control Systems"],
+        "soft_skills": ["Mechanical Intuition", "Safety-First Mindset", "Cross-Disciplinary Collaboration", "Iterative Testing"],
+        "avg_salary_inr": "₹8,50,000 - ₹26,00,000 / year",
+        "market_demand": "Very High Growth (+30% across EV, Warehouse & Surgical Robotics)",
+        "roadmap": [
+            {
+                "phase": "Phase 1: Hardware & Low-Level Coding",
+                "topics": "C/C++ Programming, Embedded Circuits, Microcontrollers (ESP32/Arduino), Actuators and Sensors"
+            },
+            {
+                "phase": "Phase 2: Robotics Foundations",
+                "topics": "Forward/Inverse Kinematics, Linear Algebra for 3D Motion, Linux CLI, Python for Robotics"
+            },
+            {
+                "phase": "Phase 3: Autonomous Navigation & ROS",
+                "topics": "Robot Operating System (ROS 2), LiDAR, SLAM (Simultaneous Localization & Mapping), Gazebo Simulation"
+            },
+            {
+                "phase": "Phase 4: Intelligent Robotics & Deployment",
+                "topics": "OpenCV, Deep Learning for Object Detection, Industrial PLC Integration, Physical Robot Capstone"
+            }
+        ],
+        "resources": [
+            {"name": "ROS 2 Official Documentation & Tutorials", "type": "Interactive Guide", "url": "https://docs.ros.org/"},
+            {"name": "MIT OpenCourseWare - Underactuated Robotics", "type": "Course", "url": "https://underactuated.csail.mit.edu/"},
+            {"name": "The Construct - ROS Basics in 5 Days", "type": "Hands-on Lab", "url": "https://www.theconstructsim.com/"}
+        ]
+    },
+
+    "blockchain_web3_architect": {
+        "title": "Blockchain & Web3 Solutions Architect",
+        "category": "Technology & Computer Science",
+        "description": "Architect decentralized ledgers, audited smart contracts, zero-knowledge proofs, and secure distributed protocols.",
+        "vector": [0.85, 0.92, 0.70, 0.95, 0.5, 0.90, 0.4, 0.3, 0.6, 0.85],
+        "required_skills": ["Solidity", "Smart Contract Security", "Cryptography", "Ethereum & EVM", "Web3.js / Ethers.js", "Rust or Go", "Distributed Consensus"],
+        "soft_skills": ["Paranoid Security Mindset", "Decentralized Governance", "Logical Rigor", "Open-Source Mentality"],
+        "avg_salary_inr": "₹10,00,000 - ₹32,00,000 / year",
+        "market_demand": "High Demand (Global DeFi, Tokenized Assets, Cross-border Settlement)",
+        "roadmap": [
+            {
+                "phase": "Phase 1: Cryptography & P2P Networks",
+                "topics": "Hashing, Asymmetric Cryptography (ECDSA), Peer-to-Peer Networks, Bitcoin Whitepaper"
+            },
+            {
+                "phase": "Phase 2: Smart Contract Engineering",
+                "topics": "Solidity Syntax, EVM OpCodes, Hardhat/Foundry Testing, OpenZeppelin Standards (ERC-20, ERC-721)"
+            },
+            {
+                "phase": "Phase 3: DApp Full-Stack Integration",
+                "topics": "Ethers.js / Viem, Wagmi, IPFS Decentralized Storage, The Graph Indexing Protocol"
+            },
+            {
+                "phase": "Phase 4: Protocol Auditing & Layer 2",
+                "topics": "Slither & Mythril Auditing, Reentrancy Attack Prevention, Rollups (Arbitrum/Optimism), ZK-Rollups"
+            }
+        ],
+        "resources": [
+            {"name": "CryptoZombies - Interactive Solidity", "type": "Interactive Game", "url": "https://cryptozombies.io/"},
+            {"name": "SpeedRunEthereum (Austin Griffith)", "type": "Hands-on Challenges", "url": "https://speedrunethereum.com/"},
+            {"name": "Ethereum.org Developer Docs", "type": "Official Documentation", "url": "https://ethereum.org/en/developers/"}
+        ]
+    },
+
+    "cleantech_renewable_engineer": {
+        "title": "Renewable Energy & CleanTech Engineer",
+        "category": "Engineering & Emerging Tech",
+        "description": "Engineer solar microgrids, wind turbine farms, green hydrogen plants, and battery energy storage technologies.",
+        "vector": [0.85, 0.85, 0.75, 0.85, 0.85, 0.85, 0.4, 0.70, 0.5, 0.65],
+        "required_skills": ["Renewable Energy Systems", "Thermodynamics", "CAD / MATLAB", "Energy Storage & Batteries", "Smart Grid Integration", "Environmental Assessment"],
+        "soft_skills": ["Climate Stewardship", "Multi-stakeholder Communication", "Systems Thinking", "Regulatory Navigation"],
+        "avg_salary_inr": "₹7,50,000 - ₹20,00,000 / year",
+        "market_demand": "High Growth (+32% Global Net-Zero Transition by 2035)",
+        "roadmap": [
+            {
+                "phase": "Phase 1: Energy & Environmental Physics",
+                "topics": "Fluid Dynamics, Thermodynamics, Solar Photovoltaic Principles, Power Electronics"
+            },
+            {
+                "phase": "Phase 2: Simulation & System Sizing",
+                "topics": "MATLAB/Simulink, PVsyst Solar Modeling, Wind Energy Assessment, Battery Chemistries"
+            },
+            {
+                "phase": "Phase 3: Grid Interconnection & Storage",
+                "topics": "High-Voltage Transmission, Inverter Architectures, Microgrid Islanding, EV Fast-Charging Hubs"
+            },
+            {
+                "phase": "Phase 4: Plant Commissioning & Policy",
+                "topics": "Clean Energy Carbon Credits, Environmental Impact Statements, Plant SCADA Supervision"
+            }
+        ],
+        "resources": [
+            {"name": "NREL Learning Hub (US National Renewable Energy Lab)", "type": "Research Hub", "url": "https://www.nrel.gov/"},
+            {"name": "Coursera Renewable Energy Specialization", "type": "Course", "url": "https://www.coursera.org/"},
+            {"name": "PVeducation - Solar Energy Fundamentals", "type": "Open Textbook", "url": "https://www.pveducation.org/"}
+        ]
+    },
+
+    "motion_vfx_designer": {
+        "title": "3D Motion Designer & Visual Effects Artist",
+        "category": "Design & Creative Arts",
+        "description": "Craft stunning 3D CGI animations, motion graphics, virtual production sets, and cinematic visual identities.",
+        "vector": [0.55, 0.65, 0.70, 0.80, 0.60, 0.50, 0.98, 0.40, 0.40, 0.50],
+        "required_skills": ["Blender / Cinema 4D", "Adobe After Effects", "3D Lighting & Shading", "Keyframe Animation", "Unreal Engine Virtual Sets", "Storyboarding"],
+        "soft_skills": ["Artistic Vision", "Spatial Imagination", "Patience with Render Workflows", "Receptive to Creative Critique"],
+        "avg_salary_inr": "₹6,00,000 - ₹18,00,000 / year",
+        "market_demand": "High Demand (Streaming content, Game CGI, Brand commercial campaigns)",
+        "roadmap": [
+            {
+                "phase": "Phase 1: Design & Timing Fundamentals",
+                "topics": "The 12 Principles of Animation, Color Theory, Typography in Motion, Adobe Illustrator/Photoshop"
+            },
+            {
+                "phase": "Phase 2: 2D Motion & Compositing",
+                "topics": "After Effects Expression scripts, Motion tracking, Kinetic typography, Sound design synchronization"
+            },
+            {
+                "phase": "Phase 3: 3D Modeling & Animation",
+                "topics": "Blender or Cinema 4D, Hard-surface modeling, UV unwrapping, PBR materials, Octane/Redshift rendering"
+            },
+            {
+                "phase": "Phase 4: Real-time VFX & Portfolio",
+                "topics": "Unreal Engine 5 Niagara particle simulations, Camera projection, High-impact commercial showreel"
+            }
+        ],
+        "resources": [
+            {"name": "School of Motion - Free Tutorials", "type": "Masterclass", "url": "https://www.schoolofmotion.com/"},
+            {"name": "Blender Guru Donut Series", "type": "Hands-on Video Course", "url": "https://www.youtube.com/@blenderguru"},
+            {"name": "Greyscalegorilla 3D Academy", "type": "Guides & Assets", "url": "https://greyscalegorilla.com/"}
+        ]
+    },
+
+    "management_consultant": {
+        "title": "Management Consultant & Strategy Advisor",
+        "category": "Business & Management",
+        "description": "Advise Fortune 500 boards and fast-growing enterprises on growth strategy, M&A operations, and restructuring.",
+        "vector": [0.85, 0.90, 0.92, 0.65, 0.20, 0.75, 0.50, 0.70, 0.98, 0.80],
+        "required_skills": ["Business Strategy", "Financial Modeling", "Market Due Diligence", "MECE Problem Framing", "Executive Presentations", "KPI Dashboards"],
+        "soft_skills": ["Persuasive Executive Presence", "Crisis Composure", "Intellectual Agility", "Cross-Functional Influence"],
+        "avg_salary_inr": "₹12,00,000 - ₹35,00,000 / year",
+        "market_demand": "Very High Demand (Top-tier Advisory, Private Equity, Digital Transformations)",
+        "roadmap": [
+            {
+                "phase": "Phase 1: Business Case & Financial Acumen",
+                "topics": "Corporate Finance, Balance Sheet & Cash Flow analysis, Microeconomics, Excel Financial Modeling"
+            },
+            {
+                "phase": "Phase 2: Structured Problem Solving",
+                "topics": "Hypothesis-Driven Consulting (MECE Frameworks, Issue Trees, 80/20 Rule, Market Sizing)"
+            },
+            {
+                "phase": "Phase 3: Executive Communication & Storylining",
+                "topics": "Pyramid Principle presentation design, Power BI/Tableau insights, Client interview techniques"
+            },
+            {
+                "phase": "Phase 4: Case Competition & Deal Advisory",
+                "topics": "M&A Due Diligence simulations, Operational transformation strategy, Mock partner case interviews"
+            }
+        ],
+        "resources": [
+            {"name": "McKinsey Insights & Perspectives", "type": "Industry Whitepapers", "url": "https://www.mckinsey.com/capabilities/strategy-and-corporate-finance/our-insights"},
+            {"name": "Crafting Cases - Case Interview Prep", "type": "Structured Training", "url": "https://www.craftingcases.com/"},
+            {"name": "Harvard Business Review (HBR) Case Studies", "type": "Case Library", "url": "https://hbr.org/"}
+        ]
+    },
+
+    "quantitative_trader": {
+        "title": "Quantitative Research Analyst & Algorithmic Trader",
+        "category": "Business & Management",
+        "description": "Formulate mathematical algorithms, stochastic statistical models, and high-frequency trading execution strategies.",
+        "vector": [0.98, 0.95, 0.75, 0.88, 0.30, 0.96, 0.30, 0.30, 0.75, 0.85],
+        "required_skills": ["Stochastic Calculus", "Time-Series Econometrics", "Python / C++", "Machine Learning in Finance", "Algorithmic Backtesting", "Risk & Sharpe Metrics"],
+        "soft_skills": ["Extreme Intellectual Rigor", "Emotional Detachment in Markets", "Fast Mental Math", "Scientific Skepticism"],
+        "avg_salary_inr": "₹15,00,000 - ₹45,00,000 / year",
+        "market_demand": "High Demand (Hedge Funds, Prop Trading Desks, Asset Managers)",
+        "roadmap": [
+            {
+                "phase": "Phase 1: Advanced Applied Mathematics",
+                "topics": "Multivariate Statistics, Probability Theory, Linear Algebra, Brownian Motion & Stochastic Calculus"
+            },
+            {
+                "phase": "Phase 2: Financial Markets & Python Modeling",
+                "topics": "Options Pricing (Black-Scholes-Merton), Time Series (ARIMA, GARCH), Pandas & NumPy performance optimization"
+            },
+            {
+                "phase": "Phase 3: Algorithmic Strategy & Backtesting",
+                "topics": "Mean-reversion, Momentum, Statistical Arbitrage, Slippage & Transaction Cost Modeling, VectorBT"
+            },
+            {
+                "phase": "Phase 4: Low Latency & Production Trading",
+                "topics": "Modern C++ (C++20), Order Book Dynamics, FIX Protocol, Live Paper Trading Execution Engine"
+            }
+        ],
+        "resources": [
+            {"name": "QuantConnect - Open Algorithmic Trading", "type": "Interactive Platform", "url": "https://www.quantconnect.com/"},
+            {"name": "MIT OpenCourseWare - Mathematics of Finance", "type": "Lecture Series", "url": "https://ocw.mit.edu/"},
+            {"name": "QuantStart - Quantitative Finance Guides", "type": "Tutorials", "url": "https://www.quantstart.com/"}
+        ]
+    },
+
+    "bioinformatics_scientist": {
+        "title": "Bioinformatics Scientist & Computational Biologist",
+        "category": "Healthcare & Social Services",
+        "description": "Mine multi-omic datasets, analyze gene sequences, model protein folds, and discover life-saving therapeutics.",
+        "vector": [0.90, 0.95, 0.75, 0.88, 0.40, 0.96, 0.40, 0.65, 0.40, 0.78],
+        "required_skills": ["Genomics & DNA Sequencing", "Python / R (Bioconductor)", "Biostatistics", "Molecular Biology Principles", "BLAST & NCBI Tools", "AlphaFold / PyMOL"],
+        "soft_skills": ["Scientific Precision", "Research Perseverance", "Interdisciplinary Synthesis", "Ethical Bio-Responsibility"],
+        "avg_salary_inr": "₹8,00,000 - ₹25,00,000 / year",
+        "market_demand": "Very High Growth (Personalized Medicine, mRNA Vaccines, CRISPR Gene Editing)",
+        "roadmap": [
+            {
+                "phase": "Phase 1: Genetics & Biological Foundations",
+                "topics": "Central Dogma of Molecular Biology, Genetics, Python for Biologists, Basic Linux Bash"
+            },
+            {
+                "phase": "Phase 2: Sequence Analysis & Biostatistics",
+                "topics": "Pairwise & Multiple Sequence Alignment (BLAST, ClustalW), R programming with Bioconductor, Hypothesis Testing"
+            },
+            {
+                "phase": "Phase 3: Next-Generation Sequencing (NGS)",
+                "topics": "RNA-Seq differential expression, Variant calling pipelines (GATK), Genome assembly (FastQC, Bowtie2)"
+            },
+            {
+                "phase": "Phase 4: Structural Biology & AI Therapeutics",
+                "topics": "AlphaFold protein structure prediction, Molecular docking (AutoDock), Drug discovery machine learning"
+            }
+        ],
+        "resources": [
+            {"name": "Rosalind - Learn Bioinformatics Through Problems", "type": "Interactive Coding", "url": "https://rosalind.info/"},
+            {"name": "NCBI Education & Training", "type": "Official Databases", "url": "https://www.ncbi.nlm.nih.gov/home/learn/"},
+            {"name": "EMBL-EBI Online Training", "type": "Free Courses", "url": "https://www.ebi.ac.uk/training/"}
+        ]
+    },
+
+    "human_resources_talent_strategist": {
+        "title": "People & Talent Strategy Director",
+        "category": "Business & Management",
+        "description": "Shape organizational culture, design talent acquisition pipelines, nurture employee wellbeing, and lead HR analytics.",
+        "vector": [0.50, 0.70, 0.92, 0.50, 0.20, 0.50, 0.60, 0.96, 0.88, 0.80],
+        "required_skills": ["Talent Acquisition", "Organizational Psychology", "Performance Management", "HR Analytics & Metrics", "Conflict Mediation", "Labor Law Compliance"],
+        "soft_skills": ["Deep Emotional Empathy", "Discretion & Trustworthiness", "Active Listening", "Diplomatic Communication"],
+        "avg_salary_inr": "₹7,00,000 - ₹22,00,000 / year",
+        "market_demand": "High Demand (Global Remote Work Culture, Tech Talent Retention)",
+        "roadmap": [
+            {
+                "phase": "Phase 1: People & Organizational Foundations",
+                "topics": "Industrial & Organizational Psychology, Employment Law basics, Core HR lifecycle, Business Ethics"
+            },
+            {
+                "phase": "Phase 2: Modern Recruiting & Employer Brand",
+                "topics": "Competency-based interviewing, Applicant Tracking Systems (ATS), Employer Branding, Diversity & Inclusion"
+            },
+            {
+                "phase": "Phase 3: Talent Analytics & Performance",
+                "topics": "Employee retention analytics, 360-degree feedback systems, Compensation & benefits benchmarking"
+            },
+            {
+                "phase": "Phase 4: Culture Transformation & Leadership",
+                "topics": "Change management strategy, Executive succession planning, Conflict negotiation, Organizational Design"
+            }
+        ],
+        "resources": [
+            {"name": "Society for Human Resource Management (SHRM)", "type": "Global Standards", "url": "https://www.shrm.org/"},
+            {"name": "AIHR - Academy to Innovate HR", "type": "Analytics Guides", "url": "https://www.aihr.com/"},
+            {"name": "CIPD People Management Hub", "type": "Professional Resources", "url": "https://www.cipd.org/"}
+        ]
     }
 }
 
@@ -508,11 +780,150 @@ RIASEC_NAMES = {
 }
 
 CATEGORY_MAP = {
-    "Technology & Computer Science": ["software_engineer", "ai_ml_engineer", "data_scientist", "cybersecurity_analyst", "cloud_devops_architect"],
-    "Design & Creative Arts": ["ui_ux_designer", "game_designer", "digital_product_designer"],
-    "Business & Management": ["product_manager", "financial_analyst", "digital_marketing_strategist"],
-    "Healthcare & Social Services": ["clinical_psychologist", "biomedical_engineer", "public_health_coordinator"]
+    "Technology & Computer Science": [
+        "software_engineer", "ai_ml_engineer", "data_scientist", "cybersecurity_analyst", 
+        "cloud_devops_architect", "blockchain_web3_architect"
+    ],
+    "Design & Creative Arts": [
+        "ui_ux_designer", "game_designer", "digital_product_designer", "motion_vfx_designer"
+    ],
+    "Business & Management": [
+        "product_manager", "financial_analyst", "digital_marketing_strategist", 
+        "management_consultant", "quantitative_trader", "human_resources_talent_strategist"
+    ],
+    "Engineering & Emerging Tech": [
+        "robotics_automation_engineer", "cleantech_renewable_engineer"
+    ],
+    "Healthcare & Social Services": [
+        "clinical_psychologist", "biomedical_engineer", "public_health_coordinator", "bioinformatics_scientist"
+    ]
 }
+
+
+def calculate_holland_profile(riasec_scores: Dict[str, float]) -> Dict[str, Any]:
+    """
+    Computes:
+    - 3-letter Holland Code (e.g., 'IRC', 'AES') based on top 3 scores
+    - Archetype persona title, tagline, key motivators, and ideal working environment
+    """
+    # Sort traits descending by score
+    sorted_traits = sorted(riasec_scores.items(), key=lambda item: item[1], reverse=True)
+    code = "".join([t[0] for t in sorted_traits[:3]])
+    top1 = sorted_traits[0][0] if sorted_traits else "I"
+    top2 = sorted_traits[1][0] if len(sorted_traits) > 1 else top1
+
+    archetypes = {
+        ("I", "R"): {
+            "title": "The Technical Innovator & Systems Architect",
+            "tagline": "Driven by deep curiosity to engineer complex, high-impact systems.",
+            "badge": "Technological Trailblazer",
+            "motivators": ["Algorithmic discovery", "Hands-on technological execution", "Root-cause problem solving"],
+            "environment": "R&D innovation hubs, autonomous tech labs, or high-scale software engineering firms."
+        },
+        ("R", "I"): {
+            "title": "The Applied Systems Engineer",
+            "tagline": "Transforms theoretical science into robust, tangible technology.",
+            "badge": "Hands-On Specialist",
+            "motivators": ["Hardware-software integration", "Precision engineering", "Tangible prototyping"],
+            "environment": "Robotics workshops, aerospace facilities, clean energy plants, or advanced labs."
+        },
+        ("I", "A"): {
+            "title": "The Creative Researcher & Conceptual Thinker",
+            "tagline": "Bridges scientific inquiry with innovative, out-of-the-box creative expression.",
+            "badge": "Visionary Thinker",
+            "motivators": ["Novel conceptual design", "Data visualization", "Exploring unexplored frontiers"],
+            "environment": "Design innovation labs, cognitive science institutes, or creative data agencies."
+        },
+        ("A", "I"): {
+            "title": "The Digital Experience Architect",
+            "tagline": "Fuses aesthetic vision with psychological and technical precision.",
+            "badge": "Creative Technologist",
+            "motivators": ["Visual elegance", "Human-centered design", "Interactive storytelling"],
+            "environment": "Interactive studios, game development hubs, or product design labs."
+        },
+        ("A", "S"): {
+            "title": "The Empathetic Storyteller & Creative Communicator",
+            "tagline": "Uses artistic media and human empathy to inspire and uplift communities.",
+            "badge": "Inspirational Creator",
+            "motivators": ["Human connection", "Expressive visual storytelling", "Community cultural enrichment"],
+            "environment": "Creative agencies, non-profit foundations, media studios, or counseling centers."
+        },
+        ("S", "A"): {
+            "title": "The Compassionate Mentor & Counselor",
+            "tagline": "Dedicated to understanding human emotion, guiding personal growth, and mental wellness.",
+            "badge": "People Champion",
+            "motivators": ["Empowering people", "Active listening & therapy", "Positive societal impact"],
+            "environment": "Counseling centers, educational institutions, or wellness institutes."
+        },
+        ("S", "E"): {
+            "title": "The Social Impact Leader & Community Organizer",
+            "tagline": "Mobilizes people, causes, and resources to solve vital social challenges.",
+            "badge": "Empathetic Leader",
+            "motivators": ["Public advocacy", "Leadership for good", "Building collaborative teams"],
+            "environment": "Global NGOs, healthcare organizations, social enterprise startups, or universities."
+        },
+        ("E", "S"): {
+            "title": "The People-Centric Executive & Culture Builder",
+            "tagline": "Empowers high-performance teams through inspirational leadership and strategic direction.",
+            "badge": "Venture Builder",
+            "motivators": ["Talent development", "Venture growth", "Influencing positive change"],
+            "environment": "Fast-growing companies, organizational consultancies, or people operations."
+        },
+        ("E", "C"): {
+            "title": "The Enterprise Strategist & Business Builder",
+            "tagline": "Orchestrates commercial ventures, operational excellence, and measurable growth.",
+            "badge": "Strategic Driver",
+            "motivators": ["Market expansion", "Commercial ROI", "High-stakes negotiation and deal-making"],
+            "environment": "Corporate executive suites, venture capital funds, or strategy consultancies."
+        },
+        ("C", "E"): {
+            "title": "The Operations Director & Financial Mastermind",
+            "tagline": "Guarantees organizational efficiency, financial precision, and scalable systems.",
+            "badge": "Precision Executive",
+            "motivators": ["Predictable performance", "Risk mitigation", "Institutional accuracy"],
+            "environment": "Investment banks, financial institutions, or corporate operations."
+        },
+        ("I", "C"): {
+            "title": "The Quantitative Analyst & Data Detective",
+            "tagline": "Uncovers truth from massive data streams with scientific discipline.",
+            "badge": "Analytical Mastermind",
+            "motivators": ["Pattern identification", "Algorithmic accuracy", "Empirical evidence"],
+            "environment": "Quantitative hedge funds, analytics laboratories, or intelligence research."
+        },
+        ("R", "C"): {
+            "title": "The Infrastructure Specialist & Security Architect",
+            "tagline": "Builds resilient physical and cyber infrastructures that never fail.",
+            "badge": "System Sentinel",
+            "motivators": ["System reliability", "Deterministic precision", "Security hardening"],
+            "environment": "Mission-critical data centers, cybersecurity operations centers, or aerospace facilities."
+        }
+    }
+
+    persona = archetypes.get((top1, top2), archetypes.get((top2, top1), {
+        "title": "The Versatile Solution Architect",
+        "tagline": "Adapts multiple cognitive and vocational skills to navigate dynamic challenges.",
+        "badge": "Multi-Disciplinary Pro",
+        "motivators": ["Cross-functional problem solving", "Continuous learning", "Balanced execution"],
+        "environment": "Interdisciplinary innovation teams and collaborative project environments."
+    }))
+
+    return {
+        "code": code,
+        "primary": top1,
+        "secondary": top2,
+        "persona": persona,
+        "sorted_traits": sorted_traits
+    }
+
+
+def get_all_careers() -> List[Dict[str, Any]]:
+    """Retrieve full list of all career profiles in knowledge base."""
+    careers = []
+    for key, data in CAREER_DATABASE.items():
+        item = dict(data)
+        item["id"] = key
+        careers.append(item)
+    return careers
 
 
 # ---------------------------------------------------------------------------
