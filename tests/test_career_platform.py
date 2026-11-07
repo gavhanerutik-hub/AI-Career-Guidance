@@ -257,7 +257,7 @@ class CareerPlatformTestCase(unittest.TestCase):
         # Test category filter
         cat_resp = self.client.get("/careers?category=Design%20%26%20Creative%20Arts")
         self.assertEqual(cat_resp.status_code, 200)
-        self.assertIn(b"UI/UX Designer", cat_resp.data)
+        self.assertIn(b"UI/UX Product Designer", cat_resp.data)
 
     def test_api_add_skill_endpoint(self):
         """Verify the interactive 1-click skill addition API."""

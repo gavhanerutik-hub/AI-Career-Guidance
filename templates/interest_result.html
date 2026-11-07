@@ -5,58 +5,70 @@
 {% block content %}
 <div class="result-card" style="max-width: 900px;">
     <span class="badge">Holland RIASEC Profiling Complete</span>
-    <h1 style="font-size: 2.2rem; color: var(--dark); margin-top: 0.5rem;">❤️ Your Holland Interest Profile & Vocational Personality</h1>
+    <h1 style="font-size: 2.2rem; color: var(--dark); margin-top: 0.5rem;">❤️ Your Holland Interest Profile & Vocational
+        Personality</h1>
     <p style="color: var(--gray-600); font-size: 1.05rem;">
         Calibrated through the Holland Occupational Themes (RIASEC) framework.
     </p>
 
     <!-- Holland Code & Archetype Banner -->
-    <div style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: #fff; padding: 2rem; border-radius: var(--radius-lg); margin: 2rem 0; box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.25); text-align: left;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+    <div
+        style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: #fff; padding: 2rem; border-radius: var(--radius-lg); margin: 2rem 0; box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.25); text-align: left;">
+        <div
+            style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
             <div>
-                <span style="background: rgba(255, 255, 255, 0.2); padding: 0.35rem 0.85rem; border-radius: var(--radius-full); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px;">
+                <span
+                    style="background: rgba(255, 255, 255, 0.2); padding: 0.35rem 0.85rem; border-radius: var(--radius-full); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px;">
                     🎯 HOLLAND CODE: {{ holland_profile.code if holland_profile else 'IRC' }}
                 </span>
                 <h2 style="color: #fff; font-size: 1.85rem; margin-top: 0.75rem;">
                     {{ holland_profile.persona.title if holland_profile else result }}
                 </h2>
                 <p style="color: rgba(255, 255, 255, 0.9); font-size: 1rem; margin-top: 0.35rem; line-height: 1.5;">
-                    {{ holland_profile.persona.tagline if holland_profile else 'A profile defined by strategic curiosity and high-impact problem solving.' }}
+                    {{ holland_profile.persona.tagline if holland_profile else 'A profile defined by strategic curiosity
+                    and high-impact problem solving.' }}
                 </p>
             </div>
             {% if holland_profile and holland_profile.persona.badge %}
-                <span style="background: #fbbf24; color: #78350f; font-weight: 800; padding: 0.45rem 1rem; border-radius: var(--radius-md); font-size: 0.85rem;">
-                    ⭐ {{ holland_profile.persona.badge }}
-                </span>
+            <span
+                style="background: #fbbf24; color: #78350f; font-weight: 800; padding: 0.45rem 1rem; border-radius: var(--radius-md); font-size: 0.85rem;">
+                ⭐ {{ holland_profile.persona.badge }}
+            </span>
             {% endif %}
         </div>
 
         {% if holland_profile and holland_profile.persona.motivators %}
-            <div style="margin-top: 1.25rem; pt-3; border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 1rem;">
-                <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.75); font-weight: 700;">Core Career Motivators:</span>
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
-                    {% for mot in holland_profile.persona.motivators %}
-                        <span style="background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); padding: 0.3rem 0.75rem; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 600;">
-                            ✨ {{ mot }}
-                        </span>
-                    {% endfor %}
-                </div>
+        <div style="margin-top: 1.25rem; pt-3; border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 1rem;">
+            <span
+                style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.75); font-weight: 700;">Core
+                Career Motivators:</span>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                {% for mot in holland_profile.persona.motivators %}
+                <span
+                    style="background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); padding: 0.3rem 0.75rem; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 600;">
+                    ✨ {{ mot }}
+                </span>
+                {% endfor %}
             </div>
+        </div>
         {% endif %}
 
         {% if holland_profile and holland_profile.persona.environment %}
-            <div style="margin-top: 0.75rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.85);">
-                <strong>🏢 Ideal Work Culture:</strong> {{ holland_profile.persona.environment }}
-            </div>
+        <div style="margin-top: 0.75rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.85);">
+            <strong>🏢 Ideal Work Culture:</strong> {{ holland_profile.persona.environment }}
+        </div>
         {% endif %}
     </div>
 
     <!-- Dual Layout: Radar Chart & Bar Breakdown -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; align-items: center; margin: 2.5rem 0; text-align: left;">
+    <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; align-items: center; margin: 2.5rem 0; text-align: left;">
         <!-- Radar Diagram -->
-        <div style="background: var(--white); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm); text-align: center;">
+        <div
+            style="background: var(--white); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm); text-align: center;">
             <h3 style="font-size: 1.1rem; color: var(--dark); margin-bottom: 0.5rem;">Holland RIASEC Hexagon Radar</h3>
-            <p style="font-size: 0.85rem; color: var(--gray-500); margin-bottom: 1rem;">Visualizing your 6-dimensional career passion envelope</p>
+            <p style="font-size: 0.85rem; color: var(--gray-500); margin-bottom: 1rem;">Visualizing your 6-dimensional
+                career passion envelope</p>
             <div style="position: relative; max-width: 340px; margin: 0 auto;">
                 <canvas id="interestRadarChart" width="340" height="340"></canvas>
             </div>
@@ -67,54 +79,71 @@
             <h3 style="font-size: 1.15rem; color: var(--dark); margin-bottom: 1.25rem;">Domain Intensity Breakdown</h3>
 
             {% for code, score in riasec.items() %}
-                <div class="bar-item">
-                    <div class="bar-header">
-                        <span>
-                            <strong>{{ code }}</strong> — {{ riasec_names.get(code, code).split('(')[0] }}
-                            {% if score >= 8 %}
-                                <span style="font-size: 0.75rem; color: #16a34a; font-weight: 700; margin-left: 0.5rem;">Primary Driver</span>
-                            {% elif score >= 5 %}
-                                <span style="font-size: 0.75rem; color: #4f46e5; font-weight: 600; margin-left: 0.5rem;">Moderate</span>
-                            {% endif %}
-                        </span>
-                        <span><strong>{{ score }}/10</strong> ({{ score * 10 }}%)</span>
-                    </div>
-                    <div class="bar-track">
-                        <div class="bar-fill {% if score >= 8 %}bar-high{% elif score >= 5 %}bar-med{% else %}bar-low{% endif %}" data-width="{{ score * 10 }}%"></div>
-                    </div>
+            <div class="bar-item">
+                <div class="bar-header">
+                    <span>
+                        <strong>{{ code }}</strong> — {{ riasec_names.get(code, code).split('(')[0] }}
+                        {% if score >= 8 %}
+                        <span style="font-size: 0.75rem; color: #16a34a; font-weight: 700; margin-left: 0.5rem;">Primary
+                            Driver</span>
+                        {% elif score >= 5 %}
+                        <span
+                            style="font-size: 0.75rem; color: #4f46e5; font-weight: 600; margin-left: 0.5rem;">Moderate</span>
+                        {% endif %}
+                    </span>
+                    <span><strong>{{ score }}/10</strong> ({{ score * 10 }}%)</span>
                 </div>
+                <div class="bar-track">
+                    <div class="bar-fill {% if score >= 8 %}bar-high{% elif score >= 5 %}bar-med{% else %}bar-low{% endif %}"
+                        data-width="{{ score * 10 }}%"></div>
+                </div>
+            </div>
             {% endfor %}
         </div>
     </div>
 
     <!-- RIASEC Framework Legend Cards -->
     <div style="margin-top: 2rem; text-align: left;">
-        <h3 style="font-size: 1.15rem; color: var(--dark); margin-bottom: 1rem;">Holland Occupational Themes Decoded</h3>
+        <h3 style="font-size: 1.15rem; color: var(--dark); margin-bottom: 1rem;">Holland Occupational Themes Decoded
+        </h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
-            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1rem;">
-                <strong style="color: var(--primary);">R — Realistic:</strong> Hands-on, tactile execution with physical or mechanical systems, robotics, and hardware.
+            <div
+                style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1rem;">
+                <strong style="color: var(--primary);">R — Realistic:</strong> Hands-on, tactile execution with physical
+                or mechanical systems, robotics, and hardware.
             </div>
-            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1rem;">
-                <strong style="color: var(--primary);">I — Investigative:</strong> Deep analytical research, mathematical modeling, and empirical discovery.
+            <div
+                style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1rem;">
+                <strong style="color: var(--primary);">I — Investigative:</strong> Deep analytical research,
+                mathematical modeling, and empirical discovery.
             </div>
-            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1rem;">
-                <strong style="color: var(--primary);">A — Artistic:</strong> Creative expression, visual communication, UX aesthetics, and novelty.
+            <div
+                style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1rem;">
+                <strong style="color: var(--primary);">A — Artistic:</strong> Creative expression, visual communication,
+                UX aesthetics, and novelty.
             </div>
-            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1rem;">
-                <strong style="color: var(--primary);">S — Social:</strong> Interpersonal empathy, mentoring, wellness, teaching, and human service.
+            <div
+                style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1rem;">
+                <strong style="color: var(--primary);">S — Social:</strong> Interpersonal empathy, mentoring, wellness,
+                teaching, and human service.
             </div>
-            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1rem;">
-                <strong style="color: var(--primary);">E — Enterprising:</strong> Strategic leadership, persuasive negotiation, venture building, and sales.
+            <div
+                style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1rem;">
+                <strong style="color: var(--primary);">E — Enterprising:</strong> Strategic leadership, persuasive
+                negotiation, venture building, and sales.
             </div>
-            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1rem;">
-                <strong style="color: var(--primary);">C — Conventional:</strong> Methodical organization, structured precision, data integrity, and compliance.
+            <div
+                style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 1rem;">
+                <strong style="color: var(--primary);">C — Conventional:</strong> Methodical organization, structured
+                precision, data integrity, and compliance.
             </div>
         </div>
     </div>
 
     <!-- Call to Action -->
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem;">
-        <a href="{{ url_for('recommendation') }}" class="btn btn-primary" style="padding: 0.95rem 2.5rem; font-size: 1.1rem; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);">
+        <a href="{{ url_for('recommendation') }}" class="btn btn-primary"
+            style="padding: 0.95rem 2.5rem; font-size: 1.1rem; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);">
             Unlock Full AI Career Recommendations 🎯
         </a>
         <a href="{{ url_for('careers_catalog') }}" class="btn btn-secondary">
@@ -147,52 +176,52 @@
                         label: "Trait Intensity (0-10)",
                         data: [
                             {{ riasec.get('R', 3) }},
-                            {{ riasec.get('I', 3) }},
+                    {{ riasec.get('I', 3) }},
                             {{ riasec.get('A', 3) }},
-                            {{ riasec.get('S', 3) }},
-                            {{ riasec.get('E', 3) }},
-                            {{ riasec.get('C', 3) }}
+        { { riasec.get('S', 3) } },
+        { { riasec.get('E', 3) } },
+        { { riasec.get('C', 3) } }
                         ],
-                        backgroundColor: "rgba(99, 102, 241, 0.25)",
-                        borderColor: "rgba(79, 70, 229, 1)",
-                        pointBackgroundColor: "rgba(79, 70, 229, 1)",
-                        pointBorderColor: "#fff",
+        backgroundColor: "rgba(99, 102, 241, 0.25)",
+            borderColor: "rgba(79, 70, 229, 1)",
+                pointBackgroundColor: "rgba(79, 70, 229, 1)",
+                    pointBorderColor: "#fff",
                         pointHoverBackgroundColor: "#fff",
-                        pointHoverBorderColor: "rgba(79, 70, 229, 1)",
-                        pointRadius: 4,
-                        borderWidth: 2.5,
-                        fill: true
-                    }]
+                            pointHoverBorderColor: "rgba(79, 70, 229, 1)",
+                                pointRadius: 4,
+                                    borderWidth: 2.5,
+                                        fill: true
+    }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            beginAtZero: true,
-                            max: 10,
-                            ticks: {
-                                stepSize: 2,
-                                display: false
-                            },
-                            grid: {
-                                color: "rgba(0, 0, 0, 0.08)"
-                            },
-                            pointLabels: {
-                                font: {
-                                    size: 11,
-                                    weight: "600"
-                                },
-                                color: "#374151"
-                            }
-                        }
+        options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            r: {
+                beginAtZero: true,
+                max: 10,
+                ticks: {
+                    stepSize: 2,
+                    display: false
+                },
+                grid: {
+                    color: "rgba(0, 0, 0, 0.08)"
+                },
+                pointLabels: {
+                    font: {
+                        size: 11,
+                        weight: "600"
                     },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
+                    color: "#374151"
                 }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
             });
         }
     });
